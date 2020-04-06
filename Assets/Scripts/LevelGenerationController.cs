@@ -71,7 +71,7 @@ public class LevelGenerationController : MonoBehaviour
 
             local_center = center._neighbourChunks[direction];
 
-            if(direction == Direction.Up)
+            if (direction == Direction.Up)
             {
                 local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.UpRight];
                 local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Right];
@@ -83,12 +83,20 @@ public class LevelGenerationController : MonoBehaviour
                 local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Up];
                 local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Right];
             }
-            else if (direction == Direction.Right)
+            else if (direction == Direction.LeftUp)
             {
-                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.UpRight];
-                local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Up];
-                local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Down];
-                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.RightDown];
+                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Up];
+                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Left];
+            }
+            else if (direction == Direction.RightDown)
+            {
+                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Right];
+                local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Down];
+            }
+            else if (direction == Direction.DownLeft)
+            {
+                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Left];
+                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Down];
             }
             else if (direction == Direction.Right)
             {
@@ -96,6 +104,13 @@ public class LevelGenerationController : MonoBehaviour
                 local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Up];
                 local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Down];
                 local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.RightDown];
+            }
+            else if (direction == Direction.Left)
+            {
+                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.LeftUp];
+                local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Up];
+                local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Down];
+                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.DownLeft];
             }
             else if (direction == Direction.Down)
             {
