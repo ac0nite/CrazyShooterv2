@@ -43,7 +43,7 @@ namespace PolygonCrazyShooter
             //int i = Array.IndexOf(arr2, _this);
             //Direction d = (Direction)arr2.GetValue((i + 4) % 8);
             //return d;
-            
+
             var arr = Enum.GetValues(typeof(Direction));
             var underValue = (int)_this;
             Direction d = (Direction)(((--underValue + 4) % 8) + 1);

@@ -6,7 +6,7 @@ using UnityEngine;
 public class MoverCamera : MonoBehaviour
 {
     [SerializeField] private Vector3 _offset = Vector3.zero;
-    [SerializeField] private Transform _target;
+    [SerializeField] private Transform _target = null;
     [SerializeField] private float _LerpT = 3;
     private float _min_distance = 4;
     [SerializeField] private float _max_distance = 20;
