@@ -43,6 +43,29 @@ public class LevelGenerationController : MonoBehaviour
                 continue;
             }
 
+
+           
+            Vector3 a = curent_chunk._dockPoints[direction].transform.position;
+            Vector3 b = curent_chunk._dockPoints[direction.GetOpposite()].transform.position;
+            Vector3 c = a - b;
+            Vector3 d = curent_chunk.transform.position + c;
+            //curent_chunk.transform.position += c;
+            //Vector3 d = c.normalized * (c.magnitude * 1.5f);
+
+            //Vector3 c2 = Vector3.zero;
+            //if ((int)direction % 2 == 0)
+            //    c2 = c.normalized * 15;
+            //else
+            //    c2 = c.normalized * 10;
+
+            //Vector3 c3 = c + c2;
+            //Collider[] collider = Physics.OverlapBox(c + c2, curent_chunk._dockPoints[direction].transform.localScale/3, Quaternion.identity, layerMask);
+
+            int layerMask = 1 << 9;
+            Collider[] collider = Physics.OverlapSphere(d, 0.5f, layerMask);
+            if (collider.Length > 0)
+                continue;
+
             var neighbour = GenerateRandomChunk();
             curent_chunk._neighbourChunks[direction] = neighbour;
             neighbour._neighbourChunks[direction.GetOpposite()] = curent_chunk;
@@ -56,7 +79,7 @@ public class LevelGenerationController : MonoBehaviour
             neighbour.transform.position += offset;
         }
 
-        BindNeighbourDockPointChanks(curent_chunk);
+        //BindNeighbourDockPointChanks(curent_chunk);
     }
 
 
@@ -70,6 +93,13 @@ public class LevelGenerationController : MonoBehaviour
                 continue;
 
             local_center = center._neighbourChunks[direction];
+
+            Vector3 c = local_center.transform.position;
+            Vector3 d = new Vector3(c.x, c.y, c.z + 20);
+
+            int layerMask = 1 << 9;
+            Collider[] collider = Physics.OverlapBox(d, local_center.transform.localScale / 2, Quaternion.identity, layerMask);
+            //Chunk ch = collider[0].GetComponents<Chunk>;w
 
             if (direction == Direction.Up)
             {
