@@ -15,8 +15,11 @@ public class Chunk : MonoBehaviour
         [SerializeField] public Transform Point = null; 
     }
 
-    [SerializeField] private List<DockPointSettings> _dockPointSettings = null;
+    public List<EnemySpawnPoint> EnemiesSpawnPoint { get { return _enemiesSpawnPoint; } }
 
+    [SerializeField] private List<DockPointSettings> _dockPointSettings = null;
+    [SerializeField] private List<EnemySpawnPoint> _enemiesSpawnPoint = null;
+     
     public Dictionary<Direction, Transform> _dockPoints = new Dictionary<Direction, Transform>();
     public readonly Dictionary<Direction, Chunk> _neighbourChunks = new Dictionary<Direction, Chunk>();
      

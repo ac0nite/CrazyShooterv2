@@ -9,7 +9,7 @@ public class LevelGenerationController : MonoBehaviour
     private void Start()
     {
         //generation first chunk
-        var initChunk = GenerateRandomChunk();
+        var initChunk = GenerateRandomChunk(false);
 
         initChunk.transform.position = Vector3.zero;
 
@@ -17,12 +17,15 @@ public class LevelGenerationController : MonoBehaviour
     }
 
 
-    private Chunk GenerateRandomChunk()
+    private Chunk GenerateRandomChunk(bool generateAdditionalElements = true)
     {
         var chunks = SettingsManager.Instance.Chunks;
         var prefab = chunks[UnityEngine.Random.Range(0, chunks.Count)];
 
         var spawnChunk = Instantiate(prefab);
+
+        if (generateAdditionalElements)
+            EnemiesSpawn(spawnChunk);
 
         spawnChunk.EventPlayerEntered += OnPlayerEnteredChunk;
 
@@ -49,17 +52,6 @@ public class LevelGenerationController : MonoBehaviour
             Vector3 b = curent_chunk._dockPoints[direction.GetOpposite()].transform.position;
             Vector3 c = a - b;
             Vector3 d = curent_chunk.transform.position + c;
-            //curent_chunk.transform.position += c;
-            //Vector3 d = c.normalized * (c.magnitude * 1.5f);
-
-            //Vector3 c2 = Vector3.zero;
-            //if ((int)direction % 2 == 0)
-            //    c2 = c.normalized * 15;
-            //else
-            //    c2 = c.normalized * 10;
-
-            //Vector3 c3 = c + c2;
-            //Collider[] collider = Physics.OverlapBox(c + c2, curent_chunk._dockPoints[direction].transform.localScale/3, Quaternion.identity, layerMask);
 
             int layerMask = 1 << 9;
             Collider[] collider = Physics.OverlapSphere(d, 0.5f, layerMask);
@@ -77,11 +69,30 @@ public class LevelGenerationController : MonoBehaviour
             var offset = centerChunkDockPoint.position - neighbourChunkDockPoint.position;
 
             neighbour.transform.position += offset;
+
+            //EnemiesSpawn(spawnChunk);
         }
 
         //BindNeighbourDockPointChanks(curent_chunk);
     }
 
+    private void EnemiesSpawn(Chunk chunk)
+    {
+        foreach(var spawnPosition in chunk.EnemiesSpawnPoint)
+        {
+            if(UnityEngine.Random.Range(0,2) == 1)
+            {
+                var settingsManager = SettingsManager.Instance;
+
+                var suitableEnemy = settingsManager.Enemies.FindAll(go => go.EnemyType == spawnPosition.EnemyType);
+                //var enemyPrefab = settingsManager.Enemies[UnityEngine.Random.Range(0, settingsManager.Enemies.Count)];
+                var enemyPrefab = suitableEnemy[UnityEngine.Random.Range(0, suitableEnemy.Count)];
+
+                var enemyObject = Instantiate(enemyPrefab, spawnPosition.transform.position, spawnPosition.transform.rotation);
+                enemyObject.transform.SetParent(chunk.transform);
+            }
+        }
+    }
 
     private void BindNeighbourDockPointChanks(Chunk center)
     {

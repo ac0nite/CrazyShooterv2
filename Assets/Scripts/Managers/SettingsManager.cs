@@ -9,6 +9,7 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager Instance;
 
     [SerializeField] public List<Chunk> Chunks = null;
+    [SerializeField] public List<Enemy> Enemies = null;
 
     private void Awake()
     {

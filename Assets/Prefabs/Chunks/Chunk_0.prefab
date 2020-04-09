@@ -943,6 +943,10 @@ MonoBehaviour:
     Point: {fileID: 1872793679728614445}
   - Direction: 8
     Point: {fileID: 1872793678277157497}
+  _enemiesSpawnPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &344645185061645050
 BoxCollider:
   m_ObjectHideFlags: 0
