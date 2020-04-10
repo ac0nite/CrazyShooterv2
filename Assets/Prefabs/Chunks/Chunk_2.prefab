@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299faa199b52274f95b17adb62a0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 3
+  EnemyType: -1
 --- !u!1 &542012610437074071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299faa199b52274f95b17adb62a0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 1
+  EnemyType: 3
 --- !u!1 &6680029428087776069
 GameObject:
   m_ObjectHideFlags: 0

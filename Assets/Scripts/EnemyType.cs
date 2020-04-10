@@ -1,7 +1,13 @@
-﻿public enum EnemyType
+﻿using System;
+
+namespace PolygonCrazyShooter
 {
-    Undefined = 0,
-    Weak = 1,
-    Fast = 2,
-    Strong = 3
+    [Flags]
+    public enum EnemyType
+    {
+        Undefined   = 0,
+        Weak        = 1 << 0,
+        Fast        = 1 << 1,
+        Strong      = 1 << 2
+    }
 }

@@ -84,7 +84,13 @@ public class LevelGenerationController : MonoBehaviour
             {
                 var settingsManager = SettingsManager.Instance;
 
-                var suitableEnemy = settingsManager.Enemies.FindAll(go => go.EnemyType == spawnPosition.EnemyType);
+                //var suitableEnemy = settingsManager.Enemies.FindAll(go => (go.EnemyType & spawnPosition.EnemyType) == go.EnemyType);
+                var suitableEnemy = settingsManager.Enemies.FindAll(go =>
+                {
+                    EnemyType et = go.EnemyType & spawnPosition.EnemyType;
+                    //return go.EnemyType == spawnPosition.EnemyType;
+                    return et != 0;
+                });
                 //var enemyPrefab = settingsManager.Enemies[UnityEngine.Random.Range(0, settingsManager.Enemies.Count)];
                 var enemyPrefab = suitableEnemy[UnityEngine.Random.Range(0, suitableEnemy.Count)];
 

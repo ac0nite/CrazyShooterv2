@@ -568,7 +568,10 @@ MonoBehaviour:
     Point: {fileID: 2104609384971532891}
   - Direction: 8
     Point: {fileID: 2104609385349301263}
-  _enemiesSpawnPoint: []
+  _enemiesSpawnPoint:
+  - {fileID: 929846816533594644}
+  - {fileID: 3479743125182623781}
+  - {fileID: 6173058298777563282}
 --- !u!65 &450464908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1327,7 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299faa199b52274f95b17adb62a0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 2
+  EnemyType: 4
 --- !u!1 &5875693441996263415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,4 +1407,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299faa199b52274f95b17adb62a0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 3
+  EnemyType: 6
