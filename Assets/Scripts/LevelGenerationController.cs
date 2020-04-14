@@ -9,7 +9,7 @@ public class LevelGenerationController : MonoBehaviour
     private void Start()
     {
         //generation first chunk
-        var initChunk = GenerateRandomChunk(false);
+        var initChunk = GenerateRandomChunk(ChunkDockPointType.Undefined,  false);
 
         initChunk.transform.position = Vector3.zero;
 
@@ -17,10 +17,15 @@ public class LevelGenerationController : MonoBehaviour
     }
 
 
-    private Chunk GenerateRandomChunk(bool generateAdditionalElements = true)
+    private Chunk GenerateRandomChunk(ChunkDockPointType type, bool generateAdditionalElements = true)
     {
         var chunks = SettingsManager.Instance.Chunks;
-        var prefab = chunks[UnityEngine.Random.Range(0, chunks.Count)];
+        var suitableChunks = type != ChunkDockPointType.Undefined
+            ? chunks.FindAll(c => c.DockPoints.Exists(t => t.Type == type))
+            : SettingsManager.Instance.Chunks;
+
+        var prefab = suitableChunks[UnityEngine.Random.Range(0, suitableChunks.Count)];
+        //var prefab = chunks[UnityEngine.Random.Range(0, chunks.Count)];
 
         var spawnChunk = Instantiate(prefab);
 
@@ -32,45 +37,62 @@ public class LevelGenerationController : MonoBehaviour
         return spawnChunk;
     }
 
-    private void GenerationNeighbourChunks(Chunk curent_chunk)
+    private void GenerationNeighbourChunks(Chunk center)
     {
         //обходить варианты направлений, смотреть, есть ли созданный чанк для этого направления
         //если нет, создаём
-        foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+        foreach (var centerDockPoint in center.DockPoints)
         {
-            if (direction == Direction.Undefined)
+            if (center.NeighbourChunks.ContainsKey(centerDockPoint))
                 continue;
+ 
+            var neighbour = GenerateRandomChunk(centerDockPoint.Type);
 
-            if (curent_chunk._neighbourChunks.ContainsKey(direction))
-            {
-                continue;
-            }
+            var neighbourDockPoint = neighbour.DockPoints.Find(p => p.Type == centerDockPoint.Type);
 
+            //заполняем соседей (old version)
+            //curent_chunk._neighbourChunks[direction] = neighbour;
+            //neighbour._neighbourChunks[direction.GetOpposite()] = curent_chunk;
 
-           
-            Vector3 a = curent_chunk._dockPoints[direction].transform.position;
-            Vector3 b = curent_chunk._dockPoints[direction.GetOpposite()].transform.position;
-            Vector3 c = a - b;
-            Vector3 d = curent_chunk.transform.position + c;
+            //var rotationOffset = Quaternion.FromToRotation(
+            //    neighbour.transform.forward, -centerDockPoint.transform.forward);
+            Vector3 pos = neighbourDockPoint.transform.position;
+            Quaternion qua = neighbourDockPoint.transform.rotation;
+            // Quaternion target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
+            Quaternion target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
+            Quaternion source = Quaternion.LookRotation(neighbourDockPoint.transform.forward, neighbourDockPoint.transform.up);
 
-            int layerMask = 1 << 9;
-            Collider[] collider = Physics.OverlapSphere(d, 0.5f, layerMask);
-            if (collider.Length > 0)
-                continue;
+            
+            var anglesRotation = target.eulerAngles - source.eulerAngles;
+            neighbour.transform.rotation *= Quaternion.Euler(anglesRotation);
 
-            var neighbour = GenerateRandomChunk();
-            curent_chunk._neighbourChunks[direction] = neighbour;
-            neighbour._neighbourChunks[direction.GetOpposite()] = curent_chunk;
+            //Quaternion q = new Quaternion();
+            //q.SetFromToRotation(neighbourDockPoint.transform.forward, -centerDockPoint.transform.forward);
+            //neighbour.transform.rotation *= q;
 
+            //var rotationOffset = Quaternion.RotateTowards(
+            //    neighbourDockPoint.transform.rotation,
+            //    target,
+            //    5);
+
+            //neighbour.transform.rotation *= rotationOffset;
+
+            //neighbourDockPoint.transform.rotation.SetFromToRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
+
+            Vector3 pos2 = neighbourDockPoint.transform.position;
+            Quaternion qua2 = neighbourDockPoint.transform.rotation;
+
+            float ang = Quaternion.Angle(neighbour.transform.rotation, centerDockPoint.transform.rotation);
 
             //выровнять соседа относительно центрального
-            Transform centerChunkDockPoint = curent_chunk._dockPoints[direction];
-            Transform neighbourChunkDockPoint = neighbour._dockPoints[direction.GetOpposite()];
-            var offset = centerChunkDockPoint.position - neighbourChunkDockPoint.position;
+            var offset = centerDockPoint.transform.position - neighbourDockPoint.transform.position;
 
             neighbour.transform.position += offset;
 
-            //EnemiesSpawn(spawnChunk);
+            center.NeighbourChunks[centerDockPoint] = neighbour;
+            neighbour.NeighbourChunks[neighbourDockPoint] = center;
+
+            //check for neighbour
         }
 
         //BindNeighbourDockPointChanks(curent_chunk);
@@ -100,89 +122,89 @@ public class LevelGenerationController : MonoBehaviour
         }
     }
 
-    private void BindNeighbourDockPointChanks(Chunk center)
-    {
-        Chunk local_center = null;
+    //private void BindNeighbourDockPointChanks(Chunk center)
+    //{
+    //    Chunk local_center = null;
 
-        foreach (Direction direction in Enum.GetValues(typeof(Direction)))
-        {
-            if (!center._neighbourChunks.ContainsKey(direction))
-                continue;
+    //    foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+    //    {
+    //        if (!center._neighbourChunks.ContainsKey(direction))
+    //            continue;
 
-            local_center = center._neighbourChunks[direction];
+    //        local_center = center._neighbourChunks[direction];
 
-            Vector3 c = local_center.transform.position;
-            Vector3 d = new Vector3(c.x, c.y, c.z + 20);
+    //        Vector3 c = local_center.transform.position;
+    //        Vector3 d = new Vector3(c.x, c.y, c.z + 20);
 
-            int layerMask = 1 << 9;
-            Collider[] collider = Physics.OverlapBox(d, local_center.transform.localScale / 2, Quaternion.identity, layerMask);
-            //Chunk ch = collider[0].GetComponents<Chunk>;w
+    //        int layerMask = 1 << 9;
+    //        Collider[] collider = Physics.OverlapBox(d, local_center.transform.localScale / 2, Quaternion.identity, layerMask);
+    //        //Chunk ch = collider[0].GetComponents<Chunk>;w
 
-            if (direction == Direction.Up)
-            {
-                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.UpRight];
-                local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Right];
-                local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.LeftUp];
-                local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Left];
-            }
-            else if (direction == Direction.UpRight)
-            {
-                local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Up];
-                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Right];
-            }
-            else if (direction == Direction.LeftUp)
-            {
-                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Up];
-                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Left];
-            }
-            else if (direction == Direction.RightDown)
-            {
-                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Right];
-                local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Down];
-            }
-            else if (direction == Direction.DownLeft)
-            {
-                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Left];
-                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Down];
-            }
-            else if (direction == Direction.Right)
-            {
-                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.UpRight];
-                local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Up];
-                local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Down];
-                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.RightDown];
-            }
-            else if (direction == Direction.Left)
-            {
-                local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.LeftUp];
-                local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Up];
-                local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Down];
-                local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.DownLeft];
-            }
-            else if (direction == Direction.Down)
-            {
-                local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.RightDown];
-                local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Right];
-                local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.DownLeft];
-                local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Left];
-            }
+    //        if (direction == Direction.Up)
+    //        {
+    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.UpRight];
+    //            local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Right];
+    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.LeftUp];
+    //            local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Left];
+    //        }
+    //        else if (direction == Direction.UpRight)
+    //        {
+    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Up];
+    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Right];
+    //        }
+    //        else if (direction == Direction.LeftUp)
+    //        {
+    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Up];
+    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Left];
+    //        }
+    //        else if (direction == Direction.RightDown)
+    //        {
+    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Right];
+    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Down];
+    //        }
+    //        else if (direction == Direction.DownLeft)
+    //        {
+    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Left];
+    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Down];
+    //        }
+    //        else if (direction == Direction.Right)
+    //        {
+    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.UpRight];
+    //            local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Up];
+    //            local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Down];
+    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.RightDown];
+    //        }
+    //        else if (direction == Direction.Left)
+    //        {
+    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.LeftUp];
+    //            local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Up];
+    //            local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Down];
+    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.DownLeft];
+    //        }
+    //        else if (direction == Direction.Down)
+    //        {
+    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.RightDown];
+    //            local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Right];
+    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.DownLeft];
+    //            local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Left];
+    //        }
 
-        }
+    //    }
 
-        //foreach(Direction direction in Enum.GetValues(typeof(Direction)))
-        //{
-        //    if (center._neighbourChunks.ContainsKey(direction))
-        //        continue;
+    //    //foreach(Direction direction in Enum.GetValues(typeof(Direction)))
+    //    //{
+    //    //    if (center._neighbourChunks.ContainsKey(direction))
+    //    //        continue;
 
-        //    switch(direction)
-        //    {
-        //        case Direction.Up:
-        //            center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Right.GetOpposite()];
-        //            center._neighbourChunks[Direction.Right.GetOpposite()] = center._neighbourChunks[Direction.Right];
-        //            break;
-        //    }
-        //}
-    }
+    //    //    switch(direction)
+    //    //    {
+    //    //        case Direction.Up:
+    //    //            center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Right.GetOpposite()];
+    //    //            center._neighbourChunks[Direction.Right.GetOpposite()] = center._neighbourChunks[Direction.Right];
+    //    //            break;
+    //    //    }
+    //    //}
+    //}
 
     private void OnPlayerEnteredChunk(Chunk chunk)
     {

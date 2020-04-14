@@ -774,7 +774,6 @@ MonoBehaviour:
   Chunks:
   - {fileID: 2104609384750130647, guid: 9f0a91da3ad5d824890e35023dc2152c, type: 3}
   - {fileID: 6486619421846475150, guid: a12cf08a7ec434f4b90b79e5f3c3e398, type: 3}
-  - {fileID: 8885978126607794529, guid: 0ffe65508f63548429741007a6524c66, type: 3}
   Enemies:
   - {fileID: 5004322009049203136, guid: 91e2055e857baa14086f707824a13d53, type: 3}
   - {fileID: 1574498112865079293, guid: 8bf2f465e990a494c89e78b1f17d420b, type: 3}
@@ -2048,12 +2047,12 @@ PrefabInstance:
     - target: {fileID: 3918941409532987634, guid: 31a3702b3e89f0b4ca49aa956e17c43b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3918941409532987634, guid: 31a3702b3e89f0b4ca49aa956e17c43b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 3918941409532987634, guid: 31a3702b3e89f0b4ca49aa956e17c43b,
         type: 3}
