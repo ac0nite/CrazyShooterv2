@@ -1150,8 +1150,6 @@ MonoBehaviour:
   _dockPointSettings:
   - {fileID: 3773913035587467191}
   - {fileID: 8455015702606958964}
-  - {fileID: 2288790154922408663}
-  - {fileID: 6925921612260558451}
   _enemiesSpawnPoint:
   - {fileID: 5789161512944278962}
   - {fileID: 4088329463520955548}

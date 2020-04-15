@@ -50,43 +50,17 @@ public class LevelGenerationController : MonoBehaviour
 
             var neighbourDockPoint = neighbour.DockPoints.Find(p => p.Type == centerDockPoint.Type);
 
-            //заполняем соседей (old version)
-            //curent_chunk._neighbourChunks[direction] = neighbour;
-            //neighbour._neighbourChunks[direction.GetOpposite()] = curent_chunk;
+            //Quaternion target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
+            //Quaternion source = Quaternion.LookRotation(neighbourDockPoint.transform.forward, neighbourDockPoint.transform.up);
+            //var anglesRotation = target.eulerAngles - source.eulerAngles;
+            //neighbour.transform.rotation *= Quaternion.Euler(anglesRotation);
 
-            //var rotationOffset = Quaternion.FromToRotation(
-            //    neighbour.transform.forward, -centerDockPoint.transform.forward);
-            Vector3 pos = neighbourDockPoint.transform.position;
-            Quaternion qua = neighbourDockPoint.transform.rotation;
-            // Quaternion target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
-            Quaternion target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
-            Quaternion source = Quaternion.LookRotation(neighbourDockPoint.transform.forward, neighbourDockPoint.transform.up);
-
-            
-            var anglesRotation = target.eulerAngles - source.eulerAngles;
-            neighbour.transform.rotation *= Quaternion.Euler(anglesRotation);
-
-            //Quaternion q = new Quaternion();
-            //q.SetFromToRotation(neighbourDockPoint.transform.forward, -centerDockPoint.transform.forward);
-            //neighbour.transform.rotation *= q;
-
-            //var rotationOffset = Quaternion.RotateTowards(
-            //    neighbourDockPoint.transform.rotation,
-            //    target,
-            //    5);
-
-            //neighbour.transform.rotation *= rotationOffset;
-
-            //neighbourDockPoint.transform.rotation.SetFromToRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
-
-            Vector3 pos2 = neighbourDockPoint.transform.position;
-            Quaternion qua2 = neighbourDockPoint.transform.rotation;
-
-            float ang = Quaternion.Angle(neighbour.transform.rotation, centerDockPoint.transform.rotation);
+            var target = Quaternion.LookRotation(-centerDockPoint.transform.forward, centerDockPoint.transform.up);
+            var rotationOffset = target * Quaternion.Inverse(neighbourDockPoint.transform.rotation);
+            neighbour.transform.rotation *= rotationOffset;
 
             //выровнять соседа относительно центрального
             var offset = centerDockPoint.transform.position - neighbourDockPoint.transform.position;
-
             neighbour.transform.position += offset;
 
             center.NeighbourChunks[centerDockPoint] = neighbour;
