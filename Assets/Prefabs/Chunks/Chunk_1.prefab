@@ -790,10 +790,13 @@ MonoBehaviour:
   _dockPointSettings:
   - {fileID: 4683823308303695945}
   - {fileID: 3655203078620474703}
+  - {fileID: 725821106770459758}
   _enemiesSpawnPoint:
   - {fileID: 929846816533594644}
   - {fileID: 3479743125182623781}
   - {fileID: 6173058298777563282}
+  _boundingColliders:
+  - {fileID: 450464908}
 --- !u!65 &450464908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -805,7 +808,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 4, z: 20}
+  m_Size: {x: 19.9, y: 4, z: 19.9}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &2104609384867515187
 GameObject:
