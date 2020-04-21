@@ -17,6 +17,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     private Quaternion _currentRotation = Quaternion.identity;
 
     private Vector3 _targetMovementVelocity = Vector3.zero;
+    private Vector3 _lookVector = Vector3.zero;
 
     void Awake()
     {
@@ -27,11 +28,13 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     private void OnEnable()
     {
         InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
+        InputManager.Instance.EventPlayerLookPointChanged += OnPlayerLookPointChanged;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
+        InputManager.Instance.EventPlayerLookPointChanged -= OnPlayerLookPointChanged;
     }
 
     private void OnPlayerMovementDirectionChanged(Vector3 targetMovementVector)
@@ -39,9 +42,12 @@ public class CharacterMovemevtBehavior : MonoBehaviour
         _targetMovementVelocity = targetMovementVector.normalized * _speed;
     }
 
-    private void OnPlayerLookPointChanged(Vector3 lookPointChanged)
+    private void OnPlayerLookPointChanged(Vector3 lookPoint)
     {
-
+        //Debug.Log($"OnPlayerLookPointChanged");
+        lookPoint.y = transform.position.y;
+        _lookVector = (lookPoint - transform.position).normalized;
+        _currentRotation = Quaternion.LookRotation(_lookVector);
     }
 
     // Update is called once per frame
@@ -49,33 +55,16 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     {
         _currentVelocity = Vector3.Lerp(_currentVelocity, _targetMovementVelocity, _VelocityLerpSpeed * Time.deltaTime);
 
-
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var plane = new Plane(Vector3.up, transform.position);
-
-        var lookVector = transform.forward;
-
-        if(plane.Raycast(ray,out float distance))
-        {
-            Vector3 lookPoint = ray.GetPoint(distance);
-            lookPoint.y = transform.position.y;
-            lookVector = (lookPoint - transform.position).normalized;
-            //_currentRotation = Quaternion.LookRotation(lookPoint - transform.position, Vector3.up);
-            _currentRotation = Quaternion.LookRotation(lookVector);
-         }
-
-        //float moveSpeedX =  Mathf.Sign(Vector3.Dot(_currentVelocity, -Vector3.Cross(lookVector, Vector3.up))) * 
-        //                    Vector3.Project(_currentVelocity / _speed, -Vector3.Cross(lookVector, Vector3.up)).magnitude;
-        //float moveSpeedZ = Mathf.Sign(Vector3.Dot(_currentVelocity / _speed, lookVector)) * Vector3.Project(_currentVelocity, lookVector).magnitude;
-
-        float moveSpeedX = Vector3.Dot(_currentVelocity / _speed, -Vector3.Cross(lookVector, Vector3.up));
-        float moveSpeedZ = Vector3.Dot(_currentVelocity / _speed, lookVector);
+        float moveSpeedX = Vector3.Dot(_currentVelocity / _speed, -Vector3.Cross(_lookVector, Vector3.up));
+        float moveSpeedZ = Vector3.Dot(_currentVelocity / _speed, _lookVector);
 
         if (Input.GetKey(KeyCode.LeftControl))
             moveSpeedZ += 0.1f;
 
         _animator.SetFloat("MoveSpeedX", moveSpeedX);
         _animator.SetFloat("MoveSpeedZ", moveSpeedZ);
+
+        _lookVector = transform.forward;
     }
 
     private void FixedUpdate()

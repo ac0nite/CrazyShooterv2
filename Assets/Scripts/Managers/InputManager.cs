@@ -38,12 +38,12 @@ public class InputManager : MonoBehaviour
         }
 
 
-        //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //var plane = new Plane(Vector3.up, transform.position);
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var plane = new Plane(Vector3.up, transform.position);
 
-        //if (plane.Raycast(ray, out float distance))
-        //{
-        //    EventPlayerLookPointChanged?.Invoke(ray.GetPoint(distance));
-        //}
+        if (plane.Raycast(ray, out float distance))
+        {
+            EventPlayerLookPointChanged?.Invoke(ray.GetPoint(distance));
+        }
     }
 }   
