@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using PolygonCrazyShooter;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -13,7 +15,8 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private Vector3 _currentVelocity = Vector3.zero;
     private Quaternion _currentRotation = Quaternion.identity;
-    private bool _pressButton = false;
+
+    private Vector3 _targetMovementVelocity = Vector3.zero;
 
     void Awake()
     {
@@ -21,34 +24,30 @@ public class CharacterMovemevtBehavior : MonoBehaviour
         //Physics.gravity = new Vector3(0, -100, 0);
     }
 
+    private void OnEnable()
+    {
+        InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
+    }
+
+    private void OnPlayerMovementDirectionChanged(Vector3 targetMovementVector)
+    {
+        _targetMovementVelocity = targetMovementVector.normalized * _speed;
+    }
+
+    private void OnPlayerLookPointChanged(Vector3 lookPointChanged)
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-
-        if(_currentVelocity != Vector3.zero)
-            _pressButton = true;
-
-       var _newVelocity = Vector3.zero;
-
-        float speed = _speed;
-
-        //speed *= Time.deltaTime;
-
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
-            _pressButton = true;
-
-        if (Input.GetKey(KeyCode.W))
-            _newVelocity += Vector3.forward;
-        if (Input.GetKey(KeyCode.S))
-            _newVelocity += -Vector3.forward;
-        if (Input.GetKey(KeyCode.A))
-            _newVelocity += Vector3.left;
-        if (Input.GetKey(KeyCode.D))
-            _newVelocity += Vector3.right;
-
-
-        _newVelocity = _newVelocity.normalized * _speed;
-        _currentVelocity = Vector3.Lerp(_currentVelocity, _newVelocity, _VelocityLerpSpeed * Time.deltaTime);
+        _currentVelocity = Vector3.Lerp(_currentVelocity, _targetMovementVelocity, _VelocityLerpSpeed * Time.deltaTime);
 
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -81,11 +80,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-       // if(_pressButton) 
-            _rigidbody.velocity = _currentVelocity;
-
+        _rigidbody.velocity = new Vector3(_currentVelocity.x, _rigidbody.velocity.y, _currentVelocity.z);
         _rigidbody.rotation = _currentRotation;
-
-        _pressButton = false;
     }
 }
