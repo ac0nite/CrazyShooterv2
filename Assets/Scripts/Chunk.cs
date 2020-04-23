@@ -16,7 +16,9 @@ public class Chunk : MonoBehaviour
     [SerializeField] private List<BoxCollider> _boundingColliders = null;
 
     public readonly Dictionary<ChunkDockPoint, Chunk> NeighbourChunks = new Dictionary<ChunkDockPoint, Chunk>();
-     
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("OnTriggerEnter " + other.name);

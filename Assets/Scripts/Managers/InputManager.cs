@@ -2,18 +2,20 @@
 using PolygonCrazyShooter;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : SingletoneGameObject<InputManager>
 {
-    public static InputManager Instance;
+    //public static InputManager Instance;
 
     //public event Action<Vector3> EventLookPointChanged; 
     public Action<Vector3> EventPlayerMovementDirectionChanged;
     public Action<Vector3> EventPlayerLookPointChanged;
-
+    public Action<bool> EventPlayerSprintMode;
+    public Action EventShootWeapon;
+ 
     private Vector3 _targetMovementVelocity = Vector3.zero;
-    public void Awake()
+    protected  override void Awake()
     {
-        Instance = this;
+        base.Awake();
     }
 
     private void Update()
@@ -37,7 +39,20 @@ public class InputManager : MonoBehaviour
             EventPlayerMovementDirectionChanged?.Invoke(_targetMovementVelocity);
         }
 
+        ///
+        /// sprint mode
+        /// 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            EventPlayerSprintMode?.Invoke(true);
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            EventPlayerSprintMode?.Invoke(false);
 
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //    EventPlayerSprintMode?.Invoke(Input.GetKeyDown(KeyCode.LeftShift));
+
+        ///
+        /// look point
+        /// 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var plane = new Plane(Vector3.up, transform.position);
 

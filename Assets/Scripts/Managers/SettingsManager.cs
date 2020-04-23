@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
+public class SettingsManager : SingletoneGameObject<SettingsManager>
 {
     // [SerializeField] private Direction _direction = Direction.Undefined;
-    public static SettingsManager Instance;
+//    public static SettingsManager Instance;
 
     [SerializeField] public List<Chunk> Chunks = null;
     [SerializeField] public List<Enemy> Enemies = null;
 
-    private void Awake()
+    //private void Awake()
+    //{
+    //    Instance = this;
+    //}
+
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
     }
 }

@@ -18,6 +18,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private Vector3 _targetMovementVelocity = Vector3.zero;
     private Vector3 _lookVector = Vector3.zero;
+    private bool _sprint = false;
 
     void Awake()
     {
@@ -29,12 +30,17 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     {
         InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
         InputManager.Instance.EventPlayerLookPointChanged += OnPlayerLookPointChanged;
+        InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
-        InputManager.Instance.EventPlayerLookPointChanged -= OnPlayerLookPointChanged;
+        if (InputManager.TryInstance() != null)
+        {
+            InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
+            InputManager.Instance.EventPlayerLookPointChanged -= OnPlayerLookPointChanged;
+            InputManager.Instance.EventPlayerSprintMode -= OnPlayerSprintMode;
+        }
     }
 
     private void OnPlayerMovementDirectionChanged(Vector3 targetMovementVector)
@@ -50,6 +56,11 @@ public class CharacterMovemevtBehavior : MonoBehaviour
         _currentRotation = Quaternion.LookRotation(_lookVector);
     }
 
+    private void OnPlayerSprintMode(bool sprint_mode)
+    {
+        _sprint = sprint_mode;
+        Debug.Log($"SPRINT: {sprint_mode}");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -57,8 +68,8 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
         float moveSpeedX = Vector3.Dot(_currentVelocity / _speed, -Vector3.Cross(_lookVector, Vector3.up));
         float moveSpeedZ = Vector3.Dot(_currentVelocity / _speed, _lookVector);
-
-        if (Input.GetKey(KeyCode.LeftControl))
+        
+        if (_sprint)
             moveSpeedZ += 0.1f;
 
         _animator.SetFloat("MoveSpeedX", moveSpeedX);
