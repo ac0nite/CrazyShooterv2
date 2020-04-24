@@ -24,9 +24,9 @@ namespace PolygonCrazyShooter
             }
         }
 
-        public static T TryInstance()
+        public static T TryInstance
         {
-            return _instance;
+            get { return _instance != null ? _instance : null; }
         }
 
         private static T _instance = null;

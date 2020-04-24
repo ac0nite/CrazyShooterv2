@@ -2088,3 +2088,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootingPointOffset: {x: 0, y: 1, z: 0}
+--- !u!114 &3918941408817444520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918941408817444518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1e2c4fa9972b74b9e18d793c83f201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 753844168}

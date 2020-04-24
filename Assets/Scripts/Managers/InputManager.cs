@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System;   
 using PolygonCrazyShooter;
 using UnityEngine;
 
@@ -16,6 +16,7 @@ public class InputManager : SingletoneGameObject<InputManager>
     protected  override void Awake()
     {
         base.Awake();
+
     }
 
     private void Update()
@@ -30,7 +31,6 @@ public class InputManager : SingletoneGameObject<InputManager>
             _newVelocity += Vector3.left;
         if (Input.GetKey(KeyCode.D))
             _newVelocity += Vector3.right;
-
         _newVelocity = _newVelocity.normalized;
 
         if (_targetMovementVelocity != _newVelocity)

@@ -2625,8 +2625,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3918941409532987634}
   - component: {fileID: 3918941409532987635}
-  - component: {fileID: 3918941409532987632}
   - component: {fileID: 2062138965}
+  - component: {fileID: 3918941409532987632}
   m_Layer: 8
   m_Name: Character
   m_TagString: Untagged
@@ -2667,21 +2667,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &3918941409532987632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3918941409532987633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a673c070bc7a434c8f9775f9702d26b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _animator: {fileID: 0}
-  _VelocityLerpSpeed: 5
 --- !u!95 &2062138965
 Animator:
   serializedVersion: 3
@@ -2701,6 +2686,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3918941409532987632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918941409532987633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a673c070bc7a434c8f9775f9702d26b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 10
+  _animator: {fileID: 2062138965}
+  _VelocityLerpSpeed: 5
 --- !u!1 &3918941410174068624
 GameObject:
   m_ObjectHideFlags: 0

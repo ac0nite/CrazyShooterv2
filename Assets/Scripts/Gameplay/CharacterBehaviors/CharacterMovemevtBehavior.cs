@@ -35,7 +35,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private void OnDisable()
     {
-        if (InputManager.TryInstance() != null)
+        if (InputManager.TryInstance != null)
         {
             InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
             InputManager.Instance.EventPlayerLookPointChanged -= OnPlayerLookPointChanged;
