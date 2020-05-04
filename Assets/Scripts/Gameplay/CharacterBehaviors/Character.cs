@@ -102,4 +102,9 @@ public class Character : MonoBehaviour
             collider.enabled = false;
         }
     }
+
+    public void ChangeWeapon(WeaponType weponType)
+    {
+        _characterAnimator.SetAnimation(weponType.GetIdAnimationTriggerName());
+    }
 }

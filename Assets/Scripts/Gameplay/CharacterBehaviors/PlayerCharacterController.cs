@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PolygonCrazyShooter;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterMovemevtBehavior))]
@@ -17,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
         InputManager.Instance.EventShootingWeapon += OnShootingWeapon;
         InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
         InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
+        InputManager.Instance.EventPlayerChangeWeapon += OnPlayerChangeWeapon;
     }
     private void OnDestroy()
     {
@@ -25,7 +27,15 @@ public class PlayerCharacterController : MonoBehaviour
             InputManager.Instance.EventShootingWeapon -= OnShootingWeapon;
             InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
             InputManager.Instance.EventPlayerSprintMode -= OnPlayerSprintMode;
+            InputManager.Instance.EventPlayerChangeWeapon -= OnPlayerChangeWeapon;
         }
+    }
+
+    private void OnPlayerChangeWeapon(KeyCode keyCode)
+    {
+        //доступно ли то или иное оружий!!!
+
+        _character.ChangeWeapon((WeaponType)(keyCode - 48));
     }
 
     private void OnPlayerMovementDirectionChanged(Vector3 targetDirection)

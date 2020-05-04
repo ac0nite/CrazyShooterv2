@@ -24,6 +24,8 @@ namespace PolygonCrazyShooter
             
             return $"{_this.ToString()}_Trigger";
         }
+
+
         
         // public static string GetAttackingAnimationTriggerName(this WeaponType _this)
         // {
