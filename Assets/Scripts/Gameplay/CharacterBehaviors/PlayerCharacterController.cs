@@ -10,6 +10,7 @@ public class PlayerCharacterController : MonoBehaviour
 {
     private Character _character = null;
     private CharacterMovemevtBehavior _characterMovemevtBehavior;
+    private int d = 20;
     private void Awake()
     {
         _character = GetComponent<Character>();
@@ -51,7 +52,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         if(!isShootingStarter)
             return;
-
+        
         _character.Shoot();
     }
 }

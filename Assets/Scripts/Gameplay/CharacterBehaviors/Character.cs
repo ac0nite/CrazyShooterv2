@@ -43,8 +43,11 @@ public class Character : MonoBehaviour
 
     public void PickUpWeapon(Weapon weapon)
     {
-        if(CurrentWeapon != null)
-            CurrentWeapon.DetachModel();
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.transform.SetParent(null);
+            CurrentWeapon.DetachModel();   
+        }
 
         CurrentWeapon = weapon;
         CurrentWeapon.AttachModel(_rightHandBone);

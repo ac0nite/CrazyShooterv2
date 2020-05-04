@@ -43,6 +43,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterMovemevtBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterHealthComponent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterShootingBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterPickUpBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SingletoneGameObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Content/Invector-3rdPersonController_LITE/Scripts/CharacterController/vThirdPersonMotor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -63,13 +64,14 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Chunks/Chunk.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterMovemevtBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/PlayerCharacterController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/SettingsManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterShootingBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterAnimator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/PlayerCharacterController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterPickUpBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" />
       </list>
     </option>
   </component>
@@ -123,6 +125,7 @@
       <workItem from="1588252674644" duration="7518000" />
       <workItem from="1588327664511" duration="8156000" />
       <workItem from="1588441246246" duration="2123000" />
+      <workItem from="1588624423247" duration="1479000" />
     </task>
     <servers />
   </component>
@@ -227,10 +230,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="809" y="92" width="944" height="795" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1588328401170" />
-    <state x="667" y="410" key="run.anything.popup" timestamp="1588164096962">
+    <state x="667" y="410" key="run.anything.popup" timestamp="1588624712583">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="667" y="410" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1588164096962" />
+    <state x="667" y="410" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1588624712583" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1588334638317">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -244,10 +247,10 @@
           <line>51</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" initialLine="43">
             <startOffsets>
-              <option value="1477" />
+              <option value="1479" />
             </startOffsets>
             <endOffsets>
-              <option value="1564" />
+              <option value="1566" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="10" />

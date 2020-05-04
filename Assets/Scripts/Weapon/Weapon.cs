@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
 
     public void DetachModel()
     {
-        transform.SetParent(null);
+        //transform.SetParent(null);
         _weaponModel.SetParent(transform);
         _weaponModel.GetComponent<Rigidbody>().isKinematic = false;
     }

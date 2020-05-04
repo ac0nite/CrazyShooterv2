@@ -91,6 +91,7 @@
               <e p="CharacterAnimator.cs" t="Include" />
               <e p="CharacterHealthComponent.cs" t="Include" />
               <e p="CharacterMovemevtBehavior.cs" t="Include" />
+              <e p="CharacterPickUpBehavior.cs" t="Include" />
               <e p="CharacterShootingBehavior.cs" t="Include" />
               <e p="PlayerCharacterController.cs" t="Include" />
             </e>
