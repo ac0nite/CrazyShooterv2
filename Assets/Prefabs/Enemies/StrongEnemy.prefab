@@ -599,8 +599,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1293254692335516398}
   - component: {fileID: 1574498112865079293}
+  - component: {fileID: 7543230285386601420}
   - component: {fileID: 697282702705598909}
   - component: {fileID: 2460847075039476670}
+  - component: {fileID: 272104642887856589}
   m_Layer: 11
   m_Name: StrongEnemy
   m_TagString: Untagged
@@ -637,7 +639,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ce1fa7c9da154182ed50be56f65ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightHandBone: {fileID: 0}
+  _weaponTypes: 01000000
   EnemyType: 4
+--- !u!114 &7543230285386601420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994067617775538399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1e2c4fa9972b74b9e18d793c83f201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2460847075039476670}
 --- !u!54 &697282702705598909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -673,6 +690,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &272104642887856589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994067617775538399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4a5764e927e9d418197d5b45029011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
 --- !u!1 &2161902485803102175
 GameObject:
   m_ObjectHideFlags: 0

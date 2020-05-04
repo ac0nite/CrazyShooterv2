@@ -1,4 +1,5 @@
-﻿using PolygonCrazyShooter;
+﻿using System;
+using PolygonCrazyShooter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,15 @@ using UnityEngine;
 public class SettingsManager : SingletoneGameObject<SettingsManager>
 {
     // [SerializeField] private Direction _direction = Direction.Undefined;
-//    public static SettingsManager Instance;
+    //    public static SettingsManager Instance;
 
     [SerializeField] public List<Chunk> Chunks = null;
     [SerializeField] public List<Enemy> Enemies = null;
+    [SerializeField] public List<Weapon> Weapons = null;
 
-    //private void Awake()
-    //{
-    //    Instance = this;
-    //}
-
-    protected override void Awake()
+  protected override void Awake()
     {
         base.Awake();
+        
     }
-}
+}    

@@ -55,8 +55,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4870311889222947697}
   - component: {fileID: 4870311889222947701}
+  - component: {fileID: 6898050631046585124}
   - component: {fileID: 4870311889222947696}
   - component: {fileID: 8499474099769124310}
+  - component: {fileID: -2123153203897632465}
   m_Layer: 11
   m_Name: WeakEnemy
   m_TagString: Untagged
@@ -93,7 +95,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ce1fa7c9da154182ed50be56f65ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightHandBone: {fileID: 0}
+  _weaponTypes: 01000000
   EnemyType: 1
+--- !u!114 &6898050631046585124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870311889222947698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1e2c4fa9972b74b9e18d793c83f201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8499474099769124310}
 --- !u!54 &4870311889222947696
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,6 +146,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2123153203897632465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870311889222947698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4a5764e927e9d418197d5b45029011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
 --- !u!1 &6586695282595564032
 GameObject:
   m_ObjectHideFlags: 0

@@ -2263,8 +2263,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8179958672560113484}
   - component: {fileID: 5004322009049203136}
+  - component: {fileID: -1444452728133358090}
   - component: {fileID: 3654807636425651474}
   - component: {fileID: 4128415498113253613}
+  - component: {fileID: 383680358231999253}
   m_Layer: 11
   m_Name: FastEnemy
   m_TagString: Untagged
@@ -2301,7 +2303,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ce1fa7c9da154182ed50be56f65ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightHandBone: {fileID: 0}
+  _weaponTypes: 01000000
   EnemyType: 2
+--- !u!114 &-1444452728133358090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371579367135952257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1e2c4fa9972b74b9e18d793c83f201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 4128415498113253613}
 --- !u!54 &3654807636425651474
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2337,6 +2354,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &383680358231999253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371579367135952257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4a5764e927e9d418197d5b45029011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
 --- !u!1 &7524488889467028067
 GameObject:
   m_ObjectHideFlags: 0

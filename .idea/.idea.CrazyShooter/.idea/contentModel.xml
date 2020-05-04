@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\andrew\AppData\Local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\andrew\AppData\Local\JetBrains\Rider2020.1\resharper-host\Local\Transient\ReSharperHost\v201\SolutionCaches\_CrazyShooter.830671273.00" t="ExcludeRecursive" />
+    <e p="D:\unity\CrazyShooter" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Content" t="Include">
+          <e p="Invector-3rdPersonController_LITE" t="Include">
+            <e p="3D Models" t="Include">
+              <e p="Others" t="Include">
+                <e p="HealthItem" t="Include">
+                  <e p="vAnimateUV.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="README_Basic.txt" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="Camera" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="vThirdPersonCameraEditor.cs" t="Include" />
+                </e>
+                <e p="vThirdPersonCamera.cs" t="Include" />
+              </e>
+              <e p="CharacterController" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="Resources" t="Include">
+                    <e p="vEditorStartupPrefs.cs" t="Include" />
+                  </e>
+                  <e p="vCharacterEditor.cs" t="Include" />
+                  <e p="vInvectorStartup.cs" t="Include" />
+                  <e p="vInvectorWelcomeWindow.cs" t="Include" />
+                  <e p="vThirdPersonInputEditor.cs" t="Include" />
+                </e>
+                <e p="vThirdPersonAnimator.cs" t="Include" />
+                <e p="vThirdPersonController.cs" t="Include" />
+                <e p="vThirdPersonInput.cs" t="Include" />
+                <e p="vThirdPersonMotor.cs" t="Include" />
+              </e>
+              <e p="CharacterCreator" t="Include">
+                <e p="Script" t="Include">
+                  <e p="Editor" t="Include">
+                    <e p="vCreateBasicCharacterEditor.cs" t="Include" />
+                    <e p="vHelperEditor.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+              <e p="Generic" t="Include">
+                <e p="Utils" t="Include">
+                  <e p="Editor" t="Include">
+                    <e p="vCommentEditor.cs" t="Include" />
+                  </e>
+                  <e p="vComment.cs" t="Include" />
+                  <e p="vExtensions.cs" t="Include" />
+                  <e p="vPickupItem.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+          <e p="Mixamo" t="Include">
+            <e p="Magic Pack" t="Include">
+              <e p="Demo" t="Include">
+                <e p="CameraScroll.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Camera" t="Include">
+            <e p="MoverCamera.cs" t="Include" />
+          </e>
+          <e p="Chunks" t="Include">
+            <e p="Chunk.cs" t="Include" />
+            <e p="ChunkDockPoint.cs" t="Include" />
+            <e p="ChunkDockPointType.cs" t="Include" />
+          </e>
+          <e p="Debug" t="Include">
+            <e p="InputDebug.cs" t="Include" />
+          </e>
+          <e p="Direction.cs" t="Include" />
+          <e p="Enemy" t="Include">
+            <e p="Enemy.cs" t="Include" />
+            <e p="EnemyType.cs" t="Include" />
+          </e>
+          <e p="EnemySpawnPoint.cs" t="Include" />
+          <e p="Gameplay" t="Include">
+            <e p="CharacterBehaviors" t="Include">
+              <e p="Character.cs" t="Include" />
+              <e p="CharacterAnimator.cs" t="Include" />
+              <e p="CharacterHealthComponent.cs" t="Include" />
+              <e p="CharacterMovemevtBehavior.cs" t="Include" />
+              <e p="CharacterShootingBehavior.cs" t="Include" />
+              <e p="PlayerCharacterController.cs" t="Include" />
+            </e>
+          </e>
+          <e p="LevelGenerationController.cs" t="Include" />
+          <e p="Managers" t="Include">
+            <e p="InputManager.cs" t="Include" />
+            <e p="SettingsManager.cs" t="Include" />
+          </e>
+          <e p="SingletoneGameObject.cs" t="Include" />
+          <e p="Weapon" t="Include">
+            <e p="Weapon.cs" t="Include" />
+            <e p="WeaponsType.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="CrazyShooter.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

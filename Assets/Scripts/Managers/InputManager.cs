@@ -10,7 +10,7 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<Vector3> EventPlayerMovementDirectionChanged;
     public Action<Vector3> EventPlayerLookPointChanged;
     public Action<bool> EventPlayerSprintMode;
-    public Action EventShootWeapon;
+    public Action<bool> EventShootingWeapon;
  
     private Vector3 _targetMovementVelocity = Vector3.zero;
     protected  override void Awake()
@@ -46,6 +46,14 @@ public class InputManager : SingletoneGameObject<InputManager>
             EventPlayerSprintMode?.Invoke(true);
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             EventPlayerSprintMode?.Invoke(false);
+        
+        ///
+        /// shooting
+        ///
+        if(Input.GetMouseButtonDown(0))
+            EventShootingWeapon?.Invoke(true);
+        else if(Input.GetMouseButtonUp(0))
+            EventShootingWeapon?.Invoke(false);
 
         //if (Input.GetKey(KeyCode.LeftShift))
         //    EventPlayerSprintMode?.Invoke(Input.GetKeyDown(KeyCode.LeftShift));

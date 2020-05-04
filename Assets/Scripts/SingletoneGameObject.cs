@@ -39,5 +39,10 @@ namespace PolygonCrazyShooter
 
             DontDestroyOnLoad(this.gameObject);
         }
+
+        protected virtual void Update()
+        {
+            //
+        }
     }
 }

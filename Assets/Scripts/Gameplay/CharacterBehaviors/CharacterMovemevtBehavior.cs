@@ -28,38 +28,33 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
         InputManager.Instance.EventPlayerLookPointChanged += OnPlayerLookPointChanged;
-        InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
     }
 
     private void OnDisable()
     {
         if (InputManager.TryInstance != null)
         {
-            InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
             InputManager.Instance.EventPlayerLookPointChanged -= OnPlayerLookPointChanged;
-            InputManager.Instance.EventPlayerSprintMode -= OnPlayerSprintMode;
         }
     }
 
-    private void OnPlayerMovementDirectionChanged(Vector3 targetMovementVector)
+    public void ChangePlayerMovementDirectionChanged(Vector3 targetMovementVector)
     {
         _targetMovementVelocity = targetMovementVector.normalized * _speed;
     }
 
     private void OnPlayerLookPointChanged(Vector3 lookPoint)
     {
-        //Debug.Log($"OnPlayerLookPointChanged");
         lookPoint.y = transform.position.y;
         _lookVector = (lookPoint - transform.position).normalized;
         _currentRotation = Quaternion.LookRotation(_lookVector);
     }
 
-    private void OnPlayerSprintMode(bool sprint_mode)
+    public void ChangePlayerSprintMode(bool sprint_mode)
     {
         _sprint = sprint_mode;
-        Debug.Log($"SPRINT: {sprint_mode}");
+        //Debug.Log($"SPRINT: {sprint_mode}");
     }
     // Update is called once per frame
     void Update()
