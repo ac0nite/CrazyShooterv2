@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
     
     [SerializeField] public Transform LeftHadIKTargetPoint = null;
     [SerializeField] public Transform RightHadIKTargetPoint = null;
+
+    [SerializeField] private Collider _pickUpTrigger = null;
     
     public WeaponType Type
     {
@@ -22,24 +24,39 @@ public class Weapon : MonoBehaviour
                 new Exception("Type weapon - Undefined!");
             return _currentWeaponType;
         }
-        set
-        {
-            _currentWeaponType = value;
-        }
+        set { _currentWeaponType = value; }
     }
-    public void AttachModel(Transform rightHandBone)
+
+
+    public void PickUpWeapon(Character character)
+    {
+        transform.SetParent(character.transform);
+
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
+        AttachModel(character.RightHandBone);
+
+        _pickUpTrigger.enabled = false;
+    }
+
+    public void DropWeapon()
+    {
+        transform.SetParent(null);
+        DetachModel();
+
+        _pickUpTrigger.enabled = false;
+    }
+    private void AttachModel(Transform rightHandBone)
     {
         _weaponModel.SetParent(rightHandBone);
         _weaponModel.localPosition = Vector3.zero;
         _weaponModel.localRotation = Quaternion.identity;
+
+        _weaponModel.GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    private void Awake()
-    {
-        Debug.Log($"_shootingPoint.position: {_shootingPoint.position}");
-    }
-
-    public void DetachModel()
+    private void DetachModel()
     {
         //transform.SetParent(null);
         _weaponModel.SetParent(transform);

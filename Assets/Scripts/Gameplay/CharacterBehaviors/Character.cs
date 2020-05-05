@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
+
+[RequireComponent(typeof(CharacterPickUpBehavior))]
 [RequireComponent(typeof(CharacterHealthComponent))]
 [RequireComponent(typeof(CharacterAnimator))]
 public class Character : MonoBehaviour
 {
     private CharacterHealthComponent _characterHealthComponent = null;
     private CharacterAnimator _characterAnimator = null;
+    private CharacterPickUpBehavior _characterPickUpBehavior = null;
+    public Transform RightHandBone => _rightHandBone;
     [SerializeField] private Transform _rightHandBone = null;
     [SerializeField] private List<WeaponType> _weaponTypes = null;
     public Weapon CurrentWeapon { get; set; }
@@ -28,9 +32,10 @@ public class Character : MonoBehaviour
     {
         _characterHealthComponent = GetComponent<CharacterHealthComponent>();
         _characterAnimator = GetComponent<CharacterAnimator>();
-        
+        _characterPickUpBehavior = GetComponent<CharacterPickUpBehavior>();
+
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
-        
+       
         //var defaultWeapon = GetComponentInChildren<Weapon>();
         var defaultWeapon = Instantiate(SettingsManager.Instance.Weapons[0], transform);
 
@@ -41,16 +46,18 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void PickUpWeapon(Weapon weapon)
+    private void PickUpWeapon(Weapon weapon)
     {
+        if(weapon == null)
+            return;
+
         if (CurrentWeapon != null)
         {
-            CurrentWeapon.transform.SetParent(null);
-            CurrentWeapon.DetachModel();   
+            CurrentWeapon.DropWeapon();
         }
 
         CurrentWeapon = weapon;
-        CurrentWeapon.AttachModel(_rightHandBone);
+        CurrentWeapon.PickUpWeapon(this);
         
         _characterAnimator.SetAnimation(CurrentWeapon.Type.GetIdAnimationTriggerName());
         _characterAnimator.LeftHandIKTarget = CurrentWeapon.LeftHadIKTargetPoint;
@@ -64,27 +71,10 @@ public class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Input.GetKey(KeyCode.F) && CurrentWeapon != null)
-        {
-            CurrentWeapon.DetachModel();
-        }
-        // if(Input.GetKeyDown(KeyCode.Alpha1))
-        //     _characterAnimator.SetAnimation("HandGun_Trigger");
-        // if(Input.GetKeyDown(KeyCode.Alpha2))
-        //     _characterAnimator.SetAnimation("Heavy_Trigger");
-        // if(Input.GetKeyDown(KeyCode.Alpha3))
-        //     _characterAnimator.SetAnimation("Infantry_Trigger");
-        // if(Input.GetKeyDown(KeyCode.Alpha4))
-        //     _characterAnimator.SetAnimation("Knife_Trigger");
-
-        // if (Input.GetKeyDown(KeyCode.N))
-        // {
-        //     int index = UnityEngine.Random.Range(0, 4);
-        //     Debug.Log($"Press key, index {index}");
-        //     string[] triggers =
-        //         {"HandGun_Trigger", "Heavy_Trigger", "Infantry_Trigger", "Knife_Trigger"};
-        //     _characterAnimator.SetAnimation(triggers[UnityEngine.Random.Range(0, 4)]);
-        // }
+//        if (Input.GetKey(KeyCode.F) && CurrentWeapon != null)
+//        {
+//            CurrentWeapon.DetachModel();
+//        }
     }
 
     public void Shoot()
@@ -109,5 +99,14 @@ public class Character : MonoBehaviour
     public void ChangeWeapon(WeaponType weponType)
     {
         _characterAnimator.SetAnimation(weponType.GetIdAnimationTriggerName());
+    }
+
+    public void TryPickUpBehavior()
+    {
+        var pickedUpWeapon = _characterPickUpBehavior.TryPickUpWeapon();
+        if (pickedUpWeapon != null)
+        {
+            PickUpWeapon(pickedUpWeapon);
+        }
     }
 }

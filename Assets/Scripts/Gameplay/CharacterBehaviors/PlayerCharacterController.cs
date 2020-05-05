@@ -20,6 +20,7 @@ public class PlayerCharacterController : MonoBehaviour
         InputManager.Instance.EventPlayerMovementDirectionChanged += OnPlayerMovementDirectionChanged;
         InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
         InputManager.Instance.EventPlayerChangeWeapon += OnPlayerChangeWeapon;
+        InputManager.Instance.EventPickUpItemButtonPressed += OnPickUpItemBtttonPressed;
     }
     private void OnDestroy()
     {
@@ -29,6 +30,7 @@ public class PlayerCharacterController : MonoBehaviour
             InputManager.Instance.EventPlayerMovementDirectionChanged -= OnPlayerMovementDirectionChanged;
             InputManager.Instance.EventPlayerSprintMode -= OnPlayerSprintMode;
             InputManager.Instance.EventPlayerChangeWeapon -= OnPlayerChangeWeapon;
+            InputManager.Instance.EventPickUpItemButtonPressed -= OnPickUpItemBtttonPressed;
         }
     }
 
@@ -54,5 +56,10 @@ public class PlayerCharacterController : MonoBehaviour
             return;
         
         _character.Shoot();
+    }
+
+    private void OnPickUpItemBtttonPressed()
+    {
+        _character.TryPickUpBehavior();
     }
 }

@@ -12,7 +12,9 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<bool> EventPlayerSprintMode;
     public Action<bool> EventShootingWeapon;
     public Action<KeyCode> EventPlayerChangeWeapon;
- 
+    public Action EventPickUpItemButtonPressed;
+
+
     private Vector3 _targetMovementVelocity = Vector3.zero;
     protected  override void Awake()
     {
@@ -38,6 +40,14 @@ public class InputManager : SingletoneGameObject<InputManager>
         {
              _targetMovementVelocity = _newVelocity;
             EventPlayerMovementDirectionChanged?.Invoke(_targetMovementVelocity);
+        }
+
+        ///
+        /// PickUp
+        ///
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            EventPickUpItemButtonPressed?.Invoke();
         }
 
         ///
