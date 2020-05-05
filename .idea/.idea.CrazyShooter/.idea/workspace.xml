@@ -61,7 +61,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterHealthComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SingletoneGameObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chunks/Chunk.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterMovemevtBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsType.cs" />
@@ -69,6 +68,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterShootingBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterAnimator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/PlayerCharacterController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chunks/Chunk.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterPickUpBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" />
@@ -126,6 +126,7 @@
       <workItem from="1588327664511" duration="8156000" />
       <workItem from="1588441246246" duration="2123000" />
       <workItem from="1588624423247" duration="1479000" />
+      <workItem from="1588708783019" duration="2109000" />
     </task>
     <servers />
   </component>
@@ -240,23 +241,6 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1588334638317" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs</url>
-          <line>51</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" initialLine="43">
-            <startOffsets>
-              <option value="1479" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1566" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo typeName="PolygonCrazyShooter.Enemy" fieldName="IsDead" />

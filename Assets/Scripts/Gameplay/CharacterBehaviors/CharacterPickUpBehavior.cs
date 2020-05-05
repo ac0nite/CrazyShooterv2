@@ -10,6 +10,7 @@ public class CharacterPickUpBehavior : MonoBehaviour
 
     public Weapon TryPickUpWeapon()
     {
+        Debug.Log($"TryPickUpWeapon.Count= {_overlappedWeapons.Count} ", this);
         if (_overlappedWeapons.Count > 0)
         {
             var weapon = _overlappedWeapons[0];
@@ -25,6 +26,7 @@ public class CharacterPickUpBehavior : MonoBehaviour
         var weaponComponent = other.GetComponentInParent<Weapon>();
         if (weaponComponent != null)
         {
+            Debug.Log($"OnTriggerEnter ", other);
              _overlappedWeapons.Add(weaponComponent);
             //show UI hint
         }
@@ -32,6 +34,7 @@ public class CharacterPickUpBehavior : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log($"OnTriggerExit ", other);
         var weaponComponent = other.GetComponentInParent<Weapon>();
         if (weaponComponent != null)
         {

@@ -37,7 +37,7 @@ public class Weapon : MonoBehaviour
 
         AttachModel(character.RightHandBone);
 
-        _pickUpTrigger.enabled = false;
+        _pickUpTrigger.gameObject.SetActive(false);
     }
 
     public void DropWeapon()
@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour
         transform.SetParent(null);
         DetachModel();
 
-        _pickUpTrigger.enabled = false;
+        _pickUpTrigger.gameObject.SetActive(true);
     }
     private void AttachModel(Transform rightHandBone)
     {

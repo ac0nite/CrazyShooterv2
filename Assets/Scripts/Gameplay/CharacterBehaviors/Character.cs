@@ -36,8 +36,8 @@ public class Character : MonoBehaviour
 
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
        
-        //var defaultWeapon = GetComponentInChildren<Weapon>();
-        var defaultWeapon = Instantiate(SettingsManager.Instance.Weapons[0], transform);
+        var defaultWeapon = GetComponentInChildren<Weapon>();
+        //var defaultWeapon = Instantiate(SettingsManager.Instance.Weapons[0], transform);
 
         if (defaultWeapon != null)
         {
@@ -48,9 +48,6 @@ public class Character : MonoBehaviour
 
     private void PickUpWeapon(Weapon weapon)
     {
-        if(weapon == null)
-            return;
-
         if (CurrentWeapon != null)
         {
             CurrentWeapon.DropWeapon();

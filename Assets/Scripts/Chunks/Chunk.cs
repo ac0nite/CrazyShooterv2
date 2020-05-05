@@ -40,7 +40,7 @@ public class Chunk : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter " + other.name);
+//        Debug.Log("OnTriggerEnter " + other.name);
         EventPlayerEntered?.Invoke(this);
         //EventPlayerEntered?.Invoke(this);
     }
