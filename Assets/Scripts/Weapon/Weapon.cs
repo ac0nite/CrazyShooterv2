@@ -5,16 +5,16 @@ using System.Linq;
 using PolygonCrazyShooter;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : InventoryItem
 {
-    [SerializeField] private Transform _weaponModel = null;
+    //[SerializeField] private Transform _weaponModel = null;
     [SerializeField] private Transform _shootingPoint = null;
     [SerializeField] private WeaponType _currentWeaponType = WeaponType.undefined;
     
     [SerializeField] public Transform LeftHadIKTargetPoint = null;
     [SerializeField] public Transform RightHadIKTargetPoint = null;
 
-    [SerializeField] private Collider _pickUpTrigger = null;
+//    [SerializeField] private Collider _pickUpTrigger = null;
     
     public WeaponType Type
     {
@@ -27,25 +27,44 @@ public class Weapon : MonoBehaviour
         set { _currentWeaponType = value; }
     }
 
+    public override void PickUp()
+    {
+        
+    }
+    public override void Apply(Character character)
+    {
+        _model.gameObject.SetActive(true);
+
+       _model.SetParent(character.RightHandBone);
+       _model.localPosition = Vector3.zero;
+       _model.localRotation = Quaternion.identity;
+
+
+    }
+    public override void UnApply()
+    {
+        _model.gameObject.SetActive(false);
+
+        _model.SetParent(transform);
+    }
+
+    public override void Drop()
+    {
+        DetachModel();
+    }
 
     public void PickUpWeapon(Character character)
     {
-        transform.SetParent(character.transform);
-
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+//        transform.SetParent(character.transform);
+//        transform.localPosition = Vector3.zero;
+//        transform.localRotation = Quaternion.identity;
 
         AttachModel(character.RightHandBone);
-
-        _pickUpTrigger.gameObject.SetActive(false);
     }
 
     public void DropWeapon()
     {
-        transform.SetParent(null);
-        DetachModel();
-
-        _pickUpTrigger.gameObject.SetActive(true);
+        //transform.SetParent(null);
     }
     private void AttachModel(Transform rightHandBone)
     {

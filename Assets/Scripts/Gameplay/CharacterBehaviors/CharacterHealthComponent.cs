@@ -21,7 +21,7 @@ public class CharacterHealthComponent : MonoBehaviour
     public void ModifyHealth(float HealthPoints)
     {
         var newHalth = Mathf.Clamp(HealthPoints + Health, 0f, _maxHealth);
-        Debug.Log($"Health: {newHalth}");
+        Debug.Log($"Obj: {this.gameObject.name}  Health: {newHalth}", this);
         
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (Health == newHalth) 
