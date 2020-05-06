@@ -14,6 +14,8 @@ public class Weapon : InventoryItem
     [SerializeField] public Transform LeftHadIKTargetPoint = null;
     [SerializeField] public Transform RightHadIKTargetPoint = null;
 
+    [SerializeField] private float _damage = 50f;
+
 //    [SerializeField] private Collider _pickUpTrigger = null;
     
     public WeaponType Type
@@ -28,8 +30,8 @@ public class Weapon : InventoryItem
     }
 
     public override void PickUp()
-    {
-        
+    {    
+        base.PickUp();
     }
     public override void Apply(Character character)
     {
@@ -38,50 +40,25 @@ public class Weapon : InventoryItem
        _model.SetParent(character.RightHandBone);
        _model.localPosition = Vector3.zero;
        _model.localRotation = Quaternion.identity;
-
-
+       
+       character.ApplyWeapon(this);
     }
+    
     public override void UnApply()
     {
         _model.gameObject.SetActive(false);
-
+        
         _model.SetParent(transform);
     }
 
     public override void Drop()
     {
-        DetachModel();
+        if (_model.gameObject.activeSelf)
+        {
+            _model.SetParent(transform);   
+        }
+        base.Drop();
     }
-
-    public void PickUpWeapon(Character character)
-    {
-//        transform.SetParent(character.transform);
-//        transform.localPosition = Vector3.zero;
-//        transform.localRotation = Quaternion.identity;
-
-        AttachModel(character.RightHandBone);
-    }
-
-    public void DropWeapon()
-    {
-        //transform.SetParent(null);
-    }
-    private void AttachModel(Transform rightHandBone)
-    {
-        _weaponModel.SetParent(rightHandBone);
-        _weaponModel.localPosition = Vector3.zero;
-        _weaponModel.localRotation = Quaternion.identity;
-
-        _weaponModel.GetComponent<Rigidbody>().isKinematic = true;
-    }
-
-    private void DetachModel()
-    {
-        //transform.SetParent(null);
-        _weaponModel.SetParent(transform);
-        _weaponModel.GetComponent<Rigidbody>().isKinematic = false;
-    }
-    
     public virtual void Shoot()
     {
         //Debug.Log($"_shootingPoint.position: {_shootingPoint.position}");
@@ -113,7 +90,7 @@ public class Weapon : InventoryItem
             if(healthComponent != null)
             {
                 //Debug.Log("Character was hit!");
-                healthComponent.ModifyHealth(-50f);
+                healthComponent.ModifyHealth(-_damage);
             }
         }
     }

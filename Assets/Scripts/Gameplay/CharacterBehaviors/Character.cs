@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterPickUpBehavior))]
 [RequireComponent(typeof(CharacterHealthComponent))]
@@ -12,9 +13,12 @@ public class Character : MonoBehaviour
     private CharacterHealthComponent _characterHealthComponent = null;
     private CharacterAnimator _characterAnimator = null;
     private CharacterPickUpBehavior _characterPickUpBehavior = null;
+    
     public Transform RightHandBone => _rightHandBone;
+    public Inventory CharacterInventory => _inventoryComponent;
     [SerializeField] private Transform _rightHandBone = null;
     [SerializeField] private List<WeaponType> _weaponTypes = null;
+    [SerializeField] private Inventory _inventoryComponent = null;
     public Weapon CurrentWeapon { get; set; }
     public bool IsDead
     {
@@ -42,24 +46,30 @@ public class Character : MonoBehaviour
         if (defaultWeapon != null)
         {
             //PickUpWeapon(Instantiate(SettingsManager.Instance.Weapons[0], transform));
-            PickUpWeapon(defaultWeapon);
+            //PickUpWeapon(defaultWeapon);
+            _inventoryComponent.PickUp(defaultWeapon);
+            defaultWeapon.Apply(this);
+          //  ApplyWeapon(defaultWeapon);
         }
     }
 
-    private void PickUpWeapon(Weapon weapon)
+    public void ApplyWeapon(Weapon weapon)
     {
         if (CurrentWeapon != null)
         {
-            CurrentWeapon.DropWeapon();
+            //_inventory.Drop(weapon);
+           // CurrentWeapon.Drop();
+           CurrentWeapon.UnApply();
         }
 
         CurrentWeapon = weapon;
-        CurrentWeapon.PickUpWeapon(this);
+        //CurrentWeapon.Apply(this);
         
         _characterAnimator.SetAnimation(CurrentWeapon.Type.GetIdAnimationTriggerName());
+        
         _characterAnimator.LeftHandIKTarget = CurrentWeapon.LeftHadIKTargetPoint;
-        _characterAnimator.RightHandIKTarget = CurrentWeapon.RightHadIKTargetPoint;
-    }
+        _characterAnimator.RightHandIKTarget = CurrentWeapon.RightHadIKTargetPoint;    
+    }    
 
     private void OnDestroy()
     {
@@ -98,12 +108,14 @@ public class Character : MonoBehaviour
         _characterAnimator.SetAnimation(weponType.GetIdAnimationTriggerName());
     }
 
-    public void TryPickUpBehavior()
+    public void TryPickUpItem()
     {
-        var pickedUpWeapon = _characterPickUpBehavior.TryPickUpWeapon();
-        if (pickedUpWeapon != null)
+        var pickedUpItem = _characterPickUpBehavior.TryPickUpItem();
+        
+        // ReSharper disable once Unity.PerformanceCriticalCodeNullComparison
+        if (pickedUpItem != null)
         {
-            PickUpWeapon(pickedUpWeapon);
+            _inventoryComponent.PickUp(pickedUpItem);
         }
     }
 }

@@ -12,14 +12,19 @@ namespace PolygonCrazyShooter
         {
             _model.gameObject.SetActive(false);
             _pickUpTrigger.gameObject.SetActive(false);
+            
+            _model.GetComponent<Rigidbody>().isKinematic = true;
         }
 
         public virtual void Drop()
         {
             _model.gameObject.SetActive(true);
             _pickUpTrigger.gameObject.SetActive(true);
+            
+            _model.GetComponent<Rigidbody>().isKinematic = false;
         }
         public abstract void Apply(Character character);
-        public abstract void UnApply();
+
+        public virtual void UnApply() { }
     }
 }

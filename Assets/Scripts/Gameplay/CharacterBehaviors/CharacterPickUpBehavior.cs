@@ -1,33 +1,34 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PolygonCrazyShooter;
 using UnityEngine;
 
 public class CharacterPickUpBehavior : MonoBehaviour
 {
     //public Action<Weapon> EventWeaponPickUp;
-    private List<Weapon> _overlappedWeapons  = new List<Weapon>();
+    private List<InventoryItem> _overlappedItems  = new List<InventoryItem>();
 
-    public Weapon TryPickUpWeapon()
+    public InventoryItem TryPickUpItem()
     {
-        Debug.Log($"TryPickUpWeapon.Count= {_overlappedWeapons.Count} ", this);
-        if (_overlappedWeapons.Count > 0)
+        Debug.Log($"TryPickUpWeapon.Count= {_overlappedItems.Count} ", this);
+        if (_overlappedItems.Count > 0)
         {
-            var weapon = _overlappedWeapons[0];
-            _overlappedWeapons.Remove(weapon);
-            return weapon;
-        }
+            var item = _overlappedItems[0];
+            _overlappedItems.Remove(item);
+            return item;
+        } 
 
         return null;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        var weaponComponent = other.GetComponentInParent<Weapon>();
-        if (weaponComponent != null)
+        var item = other.GetComponentInParent<InventoryItem>();
+        if (item != null)
         {
             //Debug.Log($"OnTriggerEnter ", other);
-             _overlappedWeapons.Add(weaponComponent);
+             _overlappedItems.Add(item);
             //show UI hint
         }
     }
@@ -35,11 +36,11 @@ public class CharacterPickUpBehavior : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //Debug.Log($"OnTriggerExit ", other);
-        var weaponComponent = other.GetComponentInParent<Weapon>();
-        if (weaponComponent != null)
+        var item = other.GetComponentInParent<InventoryItem>();
+        if (item != null)
         {
-            _overlappedWeapons.Remove(weaponComponent);
-            if (_overlappedWeapons.Count == 0)
+            _overlappedItems.Remove(item);
+            if (_overlappedItems.Count == 0)
             {
                 //hide UI hint
             }

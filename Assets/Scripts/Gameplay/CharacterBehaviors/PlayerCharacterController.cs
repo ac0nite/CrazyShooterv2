@@ -10,7 +10,6 @@ public class PlayerCharacterController : MonoBehaviour
 {
     private Character _character = null;
     private CharacterMovemevtBehavior _characterMovemevtBehavior;
-    private int d = 20;
     private void Awake()
     {
         _character = GetComponent<Character>();
@@ -22,6 +21,29 @@ public class PlayerCharacterController : MonoBehaviour
         InputManager.Instance.EventPlayerChangeWeapon += OnPlayerChangeWeapon;
         InputManager.Instance.EventPickUpItemButtonPressed += OnPickUpItemBtttonPressed;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            var weapons = 
+                _character.CharacterInventory.Items.FindAll(i => i.GetType() == typeof(Weapon));
+            var currenWeaponIndex = weapons.IndexOf(_character.CurrentWeapon);
+            var nextWeapon = weapons[(currenWeaponIndex+1) % weapons.Count];
+            nextWeapon.Apply(_character);
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            var item = 
+                _character.CharacterInventory.Items.Find(i => i != _character.CurrentWeapon);
+            if (item != null)
+            {
+                _character.CharacterInventory.Drop(item);
+            }
+        }
+    }
+
     private void OnDestroy()
     {
         if (InputManager.TryInstance != null)
@@ -60,6 +82,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void OnPickUpItemBtttonPressed()
     {
-        _character.TryPickUpBehavior();
+        _character.TryPickUpItem();
     }
 }
