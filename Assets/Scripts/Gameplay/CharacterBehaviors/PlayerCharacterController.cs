@@ -26,8 +26,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            var weapons = 
-                _character.CharacterInventory.Items.FindAll(i => i.GetType() == typeof(Weapon));
+            var weapons = _character.CharacterInventory.Items.FindAll(i => i.GetType() == typeof(Weapon));
             var currenWeaponIndex = weapons.IndexOf(_character.CurrentWeapon);
             var nextWeapon = weapons[(currenWeaponIndex+1) % weapons.Count];
             nextWeapon.Apply(_character);

@@ -7,20 +7,16 @@ public class CharacterHealthComponent : MonoBehaviour
 {
     public event Action<CharacterHealthComponent> EventCharacterDead;
     public event Action<CharacterHealthComponent, float> EventHealthChange; 
-    [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] public float MaxHealth = 100f;
     public float Health { get; private set; }
     private void Start()
     {
-        Health = _maxHealth;
+        Health = MaxHealth;
     }
 
-    // private void OnCharacterDead(CharacterHealthComponent healthComponent)
-    // {
-    //     
-    // }
     public void ModifyHealth(float HealthPoints)
     {
-        var newHalth = Mathf.Clamp(HealthPoints + Health, 0f, _maxHealth);
+        var newHalth = Mathf.Clamp(HealthPoints + Health, 0f, MaxHealth);
         Debug.Log($"Obj: {this.gameObject.name}  Health: {newHalth}", this);
         
         // ReSharper disable once CompareOfFloatsByEqualityOperator

@@ -637,7 +637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8176966133278739480}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.998, z: 12.83}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8176966132151733679}
@@ -657,12 +657,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6689589e7618482468822cb3ee248132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponModel: {fileID: 8176966133252093243}
+  _model: {fileID: 8176966132695443692}
+  _pickUpTrigger: {fileID: 8176966133104456025}
   _shootingPoint: {fileID: 8176966132151733679}
   _currentWeaponType: 3
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
-  _pickUpTrigger: {fileID: 8176966133104456025}
+  _damage: 50
 --- !u!1 &8176966133374651012
 GameObject:
   m_ObjectHideFlags: 0

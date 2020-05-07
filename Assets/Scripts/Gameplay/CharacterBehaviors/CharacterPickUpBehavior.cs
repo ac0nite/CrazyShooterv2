@@ -11,7 +11,7 @@ public class CharacterPickUpBehavior : MonoBehaviour
 
     public InventoryItem TryPickUpItem()
     {
-        Debug.Log($"TryPickUpWeapon.Count= {_overlappedItems.Count} ", this);
+        //Debug.Log($"TryPickUpWeapon.Count= {_overlappedItems.Count} ", this);
         if (_overlappedItems.Count > 0)
         {
             var item = _overlappedItems[0];

@@ -8,18 +8,24 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CharacterPickUpBehavior))]
 [RequireComponent(typeof(CharacterHealthComponent))]
 [RequireComponent(typeof(CharacterAnimator))]
+[RequireComponent(typeof(Medicine))]
 public class Character : MonoBehaviour
 {
     private CharacterHealthComponent _characterHealthComponent = null;
     private CharacterAnimator _characterAnimator = null;
     private CharacterPickUpBehavior _characterPickUpBehavior = null;
-    
+
     public Transform RightHandBone => _rightHandBone;
     public Inventory CharacterInventory => _inventoryComponent;
+    public CharacterHealthComponent HealthComponent => _characterHealthComponent;
+
     [SerializeField] private Transform _rightHandBone = null;
     [SerializeField] private List<WeaponType> _weaponTypes = null;
     [SerializeField] private Inventory _inventoryComponent = null;
+   
     public Weapon CurrentWeapon { get; set; }
+
+    //private readonly List<Weapon> CurrentWeapons = new List<Weapon>(4);
     public bool IsDead
     {
         get
@@ -69,7 +75,15 @@ public class Character : MonoBehaviour
         
         _characterAnimator.LeftHandIKTarget = CurrentWeapon.LeftHadIKTargetPoint;
         _characterAnimator.RightHandIKTarget = CurrentWeapon.RightHadIKTargetPoint;    
-    }    
+    }
+
+    public void DestroyMedicineItem(Medicine medicineItem)
+    {
+        Debug.Log($"Destroy Item medicine");
+
+        _inventoryComponent.Items.Remove(medicineItem);
+        Destroy(medicineItem.gameObject);
+    }
 
     private void OnDestroy()
     {
@@ -105,7 +119,20 @@ public class Character : MonoBehaviour
 
     public void ChangeWeapon(WeaponType weponType)
     {
-        _characterAnimator.SetAnimation(weponType.GetIdAnimationTriggerName());
+        var weapons = CharacterInventory.Items.
+            FindAll(i => i.GetType() == typeof(Weapon)).
+            FindAll(i => ((Weapon)i).Type == weponType);
+
+        if (weapons.Count == 1)
+        {
+            weapons[0].Apply(this);
+        }
+        else if (weapons.Count > 1)
+        {
+            var indexCurentWeapon = weapons.IndexOf(CurrentWeapon);
+            var nextweapon = weapons[(indexCurentWeapon + 1) % weapons.Count];
+            nextweapon.Apply(this);
+        }
     }
 
     public void TryPickUpItem()
@@ -116,6 +143,11 @@ public class Character : MonoBehaviour
         if (pickedUpItem != null)
         {
             _inventoryComponent.PickUp(pickedUpItem);
+
+            if (pickedUpItem.GetType() != typeof(Grenade))
+            {
+                pickedUpItem.Apply(this);
+            }
         }
     }
 }

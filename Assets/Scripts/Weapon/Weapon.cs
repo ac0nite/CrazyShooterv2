@@ -35,6 +35,12 @@ public class Weapon : InventoryItem
     }
     public override void Apply(Character character)
     {
+        if (character.CurrentWeapon != null)
+        {
+            if (gameObject.GetInstanceID() == character.CurrentWeapon.gameObject.GetInstanceID())
+                return;
+        }
+
         _model.gameObject.SetActive(true);
 
        _model.SetParent(character.RightHandBone);
