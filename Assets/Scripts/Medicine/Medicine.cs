@@ -23,7 +23,7 @@ public class Medicine : InventoryItem
 
     public override void Apply(Character character)
     {
-        character.HealthComponent.ModifyHealth(-10f);
+        //character.HealthComponent.ModifyHealth(-10f);
 
         if (character.HealthComponent.Health < character.HealthComponent.MaxHealth)
         {
@@ -31,6 +31,6 @@ public class Medicine : InventoryItem
             character.DestroyMedicineItem(this);
         }
 
-        Debug.Log($"Health {character.HealthComponent.Health}");
+        //Debug.Log($"Health {character.HealthComponent.Health}");
     }
 }

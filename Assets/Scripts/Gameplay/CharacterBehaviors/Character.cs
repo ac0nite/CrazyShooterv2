@@ -119,9 +119,18 @@ public class Character : MonoBehaviour
 
     public void ChangeWeapon(WeaponType weponType)
     {
-        var weapons = CharacterInventory.Items.
-            FindAll(i => i.GetType() == typeof(Weapon)).
-            FindAll(i => ((Weapon)i).Type == weponType);
+        var weapons = CharacterInventory.Items
+            .FindAll(i => (typeof(Weapon) == i.GetType() || typeof(Weapon) == i.GetType().BaseType)) //выделяем только тип Weapon и производные от Weapon
+            .FindAll(i => ((Weapon) i).Type == weponType);
+
+        //var weapons2 = CharacterInventory.Items.FindAll(i =>
+        //{
+        //    if (typeof(Weapon) == i.GetType() || typeof(Weapon) == i.GetType().BaseType)
+        //    {
+        //        return ((Weapon) i).Type == weponType;
+        //    }
+        //    return false;
+        //});
 
         if (weapons.Count == 1)
         {

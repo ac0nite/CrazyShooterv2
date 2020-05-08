@@ -9,4 +9,9 @@ public class Knife : Weapon
         //некая своя логика работы с ножём
         //base.Shoot();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("!!!!!! OnTriggerEnter !!!!!!!!", other);
+    }
 }

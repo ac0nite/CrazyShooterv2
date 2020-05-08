@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2978413177487141598}
   - component: {fileID: 2978413177487141599}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2978413177487141598
 Transform:
   m_ObjectHideFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 0.70948577, y: 0.709486, z: 0.7094856}
   m_Children: []
   m_Father: {fileID: 2978413178759937771}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 3.04, y: -21.56, z: -8.71}
 --- !u!65 &2978413177487141599
 BoxCollider:
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 2978413178759937771}
   - component: {fileID: 2978413178761232075}
   - component: {fileID: 2978413178762230795}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: weapon_knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,8 +168,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
-  - {fileID: 2978413177487141598}
   - {fileID: 6268527180272416684}
+  - {fileID: 2978413177487141598}
   m_Father: {fileID: 2978413178761075213}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -298,7 +298,7 @@ Transform:
   m_LocalScale: {x: 0.70948577, y: 0.709486, z: 0.7094856}
   m_Children: []
   m_Father: {fileID: 2978413178759937771}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 3.04, y: -21.56, z: -8.71}
 --- !u!65 &4389681733297722428
 BoxCollider:
