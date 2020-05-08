@@ -16,10 +16,12 @@ public class Character : MonoBehaviour
     private CharacterPickUpBehavior _characterPickUpBehavior = null;
 
     public Transform RightHandBone => _rightHandBone;
+    public Transform LefttHandBone => _leftHandBone;
     public Inventory CharacterInventory => _inventoryComponent;
     public CharacterHealthComponent HealthComponent => _characterHealthComponent;
 
     [SerializeField] private Transform _rightHandBone = null;
+    [SerializeField] private Transform _leftHandBone = null;
     [SerializeField] private List<WeaponType> _weaponTypes = null;
     [SerializeField] private Inventory _inventoryComponent = null;
    
@@ -157,6 +159,18 @@ public class Character : MonoBehaviour
             {
                 pickedUpItem.Apply(this);
             }
+        }
+    }
+
+    public void ThrowGrenade()
+    {
+        var grenades = gameObject.GetComponentsInChildren<Grenade>();
+        if (grenades.Length > 0)
+        {
+            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+            grenades[0].ThrowGrenade(this);
+            //CurrentWeapon.ThrowGrenade(this);
+            _characterAnimator.SetAnimation("AttackGrenadeTrigger");   
         }
     }
 }

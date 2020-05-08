@@ -20,6 +20,7 @@ public class PlayerCharacterController : MonoBehaviour
         InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
         InputManager.Instance.EventPlayerChangeWeapon += OnPlayerChangeWeapon;
         InputManager.Instance.EventPickUpItemButtonPressed += OnPickUpItemBtttonPressed;
+        InputManager.Instance.EventThrownigGrenade += OnThrownigGrenade;
     }
 
     private void Update()
@@ -82,5 +83,10 @@ public class PlayerCharacterController : MonoBehaviour
     private void OnPickUpItemBtttonPressed()
     {
         _character.TryPickUpItem();
+    }
+
+    private void OnThrownigGrenade()
+    {
+        _character.ThrowGrenade();
     }
 }

@@ -13,6 +13,7 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<bool> EventShootingWeapon;
     public Action<KeyCode> EventPlayerChangeWeapon;
     public Action EventPickUpItemButtonPressed;
+    public Action EventThrownigGrenade;
 
 
     private Vector3 _targetMovementVelocity = Vector3.zero;
@@ -69,6 +70,12 @@ public class InputManager : SingletoneGameObject<InputManager>
             EventPlayerChangeWeapon?.Invoke(KeyCode.Alpha3);
         if (Input.GetKeyDown(KeyCode.Alpha4))
             EventPlayerChangeWeapon?.Invoke(KeyCode.Alpha4);
+        
+        ///
+        /// grenade
+        ///
+        if(Input.GetKeyDown(KeyCode.G))
+            EventThrownigGrenade?.Invoke();
 
         ///
         /// shooting

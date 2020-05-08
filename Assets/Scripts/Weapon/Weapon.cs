@@ -14,7 +14,9 @@ public class Weapon : InventoryItem
     [SerializeField] public Transform LeftHadIKTargetPoint = null;
     [SerializeField] public Transform RightHadIKTargetPoint = null;
 
-    [SerializeField] private float _damage = 50f;
+    [SerializeField] protected float _damage = 50f;
+    
+    protected bool CanThrowGrenade = true;
 
 //    [SerializeField] private Collider _pickUpTrigger = null;
     
@@ -49,7 +51,6 @@ public class Weapon : InventoryItem
        
        character.ApplyWeapon(this);
     }
-    
     public override void UnApply()
     {
         _model.gameObject.SetActive(false);
@@ -99,5 +100,10 @@ public class Weapon : InventoryItem
                 healthComponent.ModifyHealth(-_damage);
             }
         }
+    }
+
+    public virtual void ThrowGrenade(Character character)
+    {
+        Debug.Log("ThrowGrenade");
     }
 }

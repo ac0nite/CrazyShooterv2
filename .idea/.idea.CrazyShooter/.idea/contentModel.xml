@@ -105,9 +105,16 @@
             <e p="InputManager.cs" t="Include" />
             <e p="SettingsManager.cs" t="Include" />
           </e>
+          <e p="Medicine" t="Include">
+            <e p="Medicine.cs" t="Include" />
+          </e>
           <e p="SingletoneGameObject.cs" t="Include" />
+          <e p="TestDebug.cs" t="Include" />
           <e p="Weapon" t="Include">
+            <e p="Grenade.cs" t="Include" />
+            <e p="Knife.cs" t="Include" />
             <e p="Weapon.cs" t="Include" />
+            <e p="WeaponAttack.cs" t="Include" />
             <e p="WeaponsType.cs" t="Include" />
           </e>
         </e>
