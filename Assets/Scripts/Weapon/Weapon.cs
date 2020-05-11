@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PolygonCrazyShooter;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Weapon : InventoryItem
 {
@@ -14,9 +15,11 @@ public class Weapon : InventoryItem
     [SerializeField] public Transform LeftHadIKTargetPoint = null;
     [SerializeField] public Transform RightHadIKTargetPoint = null;
 
-    [SerializeField] protected float _damage = 50f;
+    [SerializeField] protected float Damage = 50f;
     
-    protected bool CanThrowGrenade = true;
+    //protected bool CanThrowGrenade = true;
+    public bool CanUse = true;
+    public bool TimerBang = false;
 
 //    [SerializeField] private Collider _pickUpTrigger = null;
     
@@ -97,13 +100,13 @@ public class Weapon : InventoryItem
             if(healthComponent != null)
             {
                 //Debug.Log("Character was hit!");
-                healthComponent.ModifyHealth(-_damage);
+                healthComponent.ModifyHealth(-Damage);
             }
         }
     }
 
     public virtual void ThrowGrenade(Character character)
     {
-        Debug.Log("ThrowGrenade");
+//        Debug.Log("ThrowGrenade");
     }
 }

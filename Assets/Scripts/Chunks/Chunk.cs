@@ -19,15 +19,15 @@ public class Chunk : MonoBehaviour
     public readonly Dictionary<ChunkDockPoint, Chunk> NeighbourChunks = new Dictionary<ChunkDockPoint, Chunk>();
     private void Update()
     {
-        var enemies = GetComponentsInChildren<Enemy>();
-        for (int i = 0; i < enemies.Length;i++)
-        {
-                if (enemies[i].IsDead)
-            {
-                StartCoroutine(DestroyEnemy(enemies[i], 10f));
-                //Destroy(enemies[i].gameObject);
-            }
-        }
+        // var enemies = GetComponentsInChildren<Enemy>();
+        // for (int i = 0; i < enemies.Length;i++)
+        // {
+        //         if (enemies[i].IsDead)
+        //     {
+        //         StartCoroutine(DestroyEnemy(enemies[i], 10f));
+        //         //Destroy(enemies[i].gameObject);
+        //     }
+        // }
     }
     IEnumerator DestroyEnemy(Enemy enemy, float wait)
     {

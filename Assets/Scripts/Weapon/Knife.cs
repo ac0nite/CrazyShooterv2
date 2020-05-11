@@ -23,7 +23,7 @@ public class Knife : Weapon
         var enemy = other.GetComponentInParent<CharacterHealthComponent>();
         if (enemy != null)
         {
-            enemy.ModifyHealth(-_damage);
+            enemy.ModifyHealth(-Damage);
         }
     }
 }

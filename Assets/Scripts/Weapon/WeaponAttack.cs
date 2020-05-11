@@ -8,7 +8,10 @@ public class WeaponAttack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log($"KnifeAttack {this.gameObject.name} - {other.gameObject.name}", other);
-        var knife = gameObject.GetComponentInParent<Character>().GetComponentInChildren<Knife>();
+        
+        //gameObject.GetComponentInParent<Character>()?.GetComponentInChildren<Knife>()?.OnPullingTriggerEnter(other);
+        
+        var knife = gameObject.GetComponentInParent<Character>()?.GetComponentInChildren<Knife>();
         if (knife != null)
         {
             knife.OnPullingTriggerEnter(other);

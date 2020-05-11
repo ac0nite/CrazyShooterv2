@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0ddad9aa4f5987043b9ad90464f2797d
+guid: f36b0ccc9439b5a4fb9b168eb2dda4e1
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
@@ -193,21 +193,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.39962104
-        functionName: StartFlyingGrenade
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.7442121
-        functionName: EndAnimationGrenade
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

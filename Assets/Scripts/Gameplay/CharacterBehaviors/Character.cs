@@ -102,9 +102,12 @@ public class Character : MonoBehaviour
 
     public void Shoot()
     {
-        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-        CurrentWeapon.Shoot();
-        _characterAnimator.SetAnimation("AttackTrigger");
+        if (CurrentWeapon.CanUse)
+        {
+            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+            CurrentWeapon.Shoot();
+            _characterAnimator.SetAnimation("AttackTrigger");
+        }
     }
 
     private void OnCharacterDead(CharacterHealthComponent healthComponent)
@@ -159,6 +162,11 @@ public class Character : MonoBehaviour
             {
                 pickedUpItem.Apply(this);
             }
+
+            if (pickedUpItem.GetType() == typeof(Grenade))
+            {
+                ((Grenade) pickedUpItem).TimerBang = false;
+            }
         }
     }
 
@@ -167,10 +175,13 @@ public class Character : MonoBehaviour
         var grenades = gameObject.GetComponentsInChildren<Grenade>();
         if (grenades.Length > 0)
         {
-            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-            grenades[0].ThrowGrenade(this);
-            //CurrentWeapon.ThrowGrenade(this);
-            _characterAnimator.SetAnimation("AttackGrenadeTrigger");   
+            if (grenades[0].CanUse)
+            {
+                // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                grenades[0].ThrowGrenade(this);
+                _characterAnimator.SetAnimation("AttackGrenadeTrigger");
+                CurrentWeapon.CanUse = false;
+            }
         }
     }
 }

@@ -35,4 +35,25 @@ public class CharacterAnimator : MonoBehaviour
         //     _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);   
         // }
     }
+    
+    private void StartFlyingGrenade()
+    {
+        var grenades = gameObject.GetComponentsInChildren<Grenade>();
+        if (grenades.Length > 0)
+        {
+            grenades[0].StartFlying();
+        }
+    }
+
+    private void EndAnimationGrenade()
+    {
+        Debug.Log("EndAnimationGrenade");
+
+        var character = gameObject.GetComponent<Character>();
+        if (character != null)
+        {
+            Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
+            character.CurrentWeapon.CanUse = true;
+        }
+    }
 }
