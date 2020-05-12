@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class Weapon : InventoryItem
 {
     //[SerializeField] private Transform _weaponModel = null;
-    [SerializeField] private Transform _shootingPoint = null;
+    [SerializeField] protected Transform _shootingPoint = null;
     [SerializeField] private WeaponType _currentWeaponType = WeaponType.undefined;
     
     [SerializeField] public Transform LeftHadIKTargetPoint = null;

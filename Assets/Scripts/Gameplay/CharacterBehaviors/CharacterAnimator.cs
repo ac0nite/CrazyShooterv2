@@ -52,7 +52,7 @@ public class CharacterAnimator : MonoBehaviour
         var character = gameObject.GetComponent<Character>();
         if (character != null)
         {
-            Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
+            //Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
             character.CurrentWeapon.CanUse = true;
         }
     }

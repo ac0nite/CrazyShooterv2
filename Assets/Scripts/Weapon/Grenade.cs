@@ -14,6 +14,8 @@ public class Grenade : Weapon
 
     [SerializeField] private float _timeSecondsBeforeBang = 2f;
     [SerializeField] private float _radiusKilling = 4f;
+    [SerializeField] private Rigidbody _rigidbody = null;
+    [SerializeField] private float _powerThrow = 15f;
     public override void ThrowGrenade(Character character)
     {
         CanUse = false;
@@ -28,6 +30,7 @@ public class Grenade : Weapon
         _model.SetParent(character.LefttHandBone);
         _model.localPosition = Vector3.zero;
         _model.localRotation = Quaternion.identity;
+        Debug.Log("Create StartCoroutine");
         StartCoroutine(Bang(character));
     }
 
@@ -39,13 +42,15 @@ public class Grenade : Weapon
         {
             CanUse = true;
             character.CharacterInventory.Drop(this);
-            var rigidbodyGreande = this.GetComponentInChildren<Rigidbody>();
-            if (rigidbodyGreande != null)
-            {
-                Debug.Log("AddForce", this);
-                rigidbodyGreande.AddForce(this.transform.position, ForceMode.Impulse);
-                //rigidbodyGreande.AddForce(character.transform.position, ForceMode.Impulse);   
-            }
+            Debug.Log("AddForce", this);
+           // _shootingPoint.TransformPoint()
+           
+           var r2 = gameObject.GetComponentInChildren<Rigidbody>();
+           r2.AddForce(_shootingPoint.transform.forward * _powerThrow, ForceMode.Impulse);
+
+            //_rigidbody.AddForce(_shootingPoint.transform.forward * _powerThrow, ForceMode.Impulse);
+
+            //rigidbodyGreande.AddForce(character.transform.position, ForceMode.Impulse);   
         }
     }
     
@@ -57,8 +62,26 @@ public class Grenade : Weapon
 
     IEnumerator Bang(Character character)
     {
+        Debug.Log("Start StartCoroutine");
+
         TimerBang = true;
         yield return new WaitForSeconds(_timeSecondsBeforeBang);
+
+        //var cur_position = transform.TransformPoint(_model.transform.position);
+        //transform.position = Vector3.zero;
+        // transform.position = cur_position;
+
+        //var gl = _model.transform.TransformPoint(Vector3.zero);
+
+
+        Debug.Log($"curOld {_model.transform.position}");
+        var gl = this.transform.TransformDirection(_model.transform.position);
+       Debug.Log($"gl {gl}");
+       Debug.Log($"cur {_model.transform.position}");
+
+        // _model.transform.position = Vector3.zero;
+
+        Debug.Log("Process StartCoroutine");
         if (TimerBang)
         {
             Debug.Log($"BANG! {this.gameObject.name}");
@@ -68,16 +91,35 @@ public class Grenade : Weapon
             //     4f, 
             //     LayerMask.GetMask("Enemies", "Obstacles", "Player"), 
             //     QueryTriggerInteraction.Collide);
-            var colliders = Physics.OverlapSphere(this.transform.position, _radiusKilling, LayerMask.GetMask( "Player", "Enemies"));
+
+            var m = transform.TransformPoint(_model.transform.position);
+
+            var colliders = Physics.OverlapSphere(_model.transform.position, _radiusKilling, LayerMask.GetMask( "Player", "Enemies"));
             foreach (var collider in colliders)
             {
+                
                 //collider.gameObject.GetComponentInParent<CharacterHealthComponent>()?.ModifyHealth(-Damage);
+                var obj_character = collider.GetComponentInParent<Enemy>();
+                if(obj_character == null)
+                    continue;
+
+                var direction  = (obj_character.transform.position - _model.transform.position);
+                Ray ray = new Ray(_model.transform.position, direction);
+
+                Debug.DrawRay(ray.origin, ray.GetPoint(50f), Color.green, 10f);
+
+                float proportion_damage = 0f;
+                RaycastHit hit;
+                if (collider.Raycast(ray, out hit, _radiusKilling))
+                {
+                    proportion_damage = (_radiusKilling - hit.distance) / _radiusKilling;
+                    Debug.Log($"Raycast {collider.gameObject.name} {hit.distance} {proportion_damage}", collider);
+                }
+
                 var obj = collider.gameObject.GetComponentInParent<CharacterHealthComponent>();
                 if (obj != null)
                 {
-                    //collider.Raycast, )
-                    Debug.Log($"Bang {obj.gameObject.name}");
-                    obj.ModifyHealth(-Damage);
+                    obj.ModifyHealth(- (Damage * proportion_damage));
                     continue;
                 }
                 // var obj = collider.gameObject.GetComponentInParent<Character>();
@@ -91,8 +133,8 @@ public class Grenade : Weapon
                 //     
                 // }
             }
-            //var ray = new Ray(this.transform.position, );
-            Destroy(this.gameObject);   
+            
+            //Destroy(this.gameObject);   
         }
     }
 }
