@@ -6,6 +6,7 @@ using PolygonCrazyShooter;
 
 public class LevelGenerationController : MonoBehaviour
 {
+    public Action<Character> EventCharacterSpawned;
     private void Start()
     {
         //generation first chunk
@@ -147,6 +148,9 @@ public class LevelGenerationController : MonoBehaviour
                 var enemyPrefab = suitableEnemy[UnityEngine.Random.Range(0, suitableEnemy.Count)];
 
                 var enemyObject = Instantiate(enemyPrefab, spawnPosition.transform.position, spawnPosition.transform.rotation);
+                
+                EventCharacterSpawned?.Invoke(enemyObject);
+                
                 enemyObject.transform.SetParent(chunk.transform);
             }
         }

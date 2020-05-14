@@ -47,10 +47,6 @@ public class Grenade : Weapon
            
            var r2 = gameObject.GetComponentInChildren<Rigidbody>();
            r2.AddForce(_shootingPoint.transform.forward * _powerThrow, ForceMode.Impulse);
-
-            //_rigidbody.AddForce(_shootingPoint.transform.forward * _powerThrow, ForceMode.Impulse);
-
-            //rigidbodyGreande.AddForce(character.transform.position, ForceMode.Impulse);   
         }
     }
     
@@ -66,46 +62,24 @@ public class Grenade : Weapon
 
         TimerBang = true;
         yield return new WaitForSeconds(_timeSecondsBeforeBang);
-
-        //var cur_position = transform.TransformPoint(_model.transform.position);
-        //transform.position = Vector3.zero;
-        // transform.position = cur_position;
-
-        //var gl = _model.transform.TransformPoint(Vector3.zero);
-
-
-        Debug.Log($"curOld {_model.transform.position}");
-        var gl = this.transform.TransformDirection(_model.transform.position);
-       Debug.Log($"gl {gl}");
-       Debug.Log($"cur {_model.transform.position}");
-
-        // _model.transform.position = Vector3.zero;
-
+        
         Debug.Log("Process StartCoroutine");
         if (TimerBang)
         {
             Debug.Log($"BANG! {this.gameObject.name}");
-            //процедура взрыва
-            // var colliders = Physics.OverlapSphere(
-            //     this.transform.position,
-            //     4f, 
-            //     LayerMask.GetMask("Enemies", "Obstacles", "Player"), 
-            //     QueryTriggerInteraction.Collide);
-
-            var m = transform.TransformPoint(_model.transform.position);
 
             var colliders = Physics.OverlapSphere(_model.transform.position, _radiusKilling, LayerMask.GetMask( "Player", "Enemies"));
             foreach (var collider in colliders)
             {
-                
-                //collider.gameObject.GetComponentInParent<CharacterHealthComponent>()?.ModifyHealth(-Damage);
                 var obj_character = collider.GetComponentInParent<CharacterHealthComponent>();
                 if(obj_character == null)
                     continue;
+                //var direction  = (obj_character.transform.position - _model.transform.posiiotn);
 
-                //var direction  = (obj_character.transform.position - _model.transform.position);
+                //obj_character.transform.position = _model.transform.position;
+                
                 var direction = (collider.transform.position - _model.transform.position);
-                Debug.Log($"Collider:{collider.transform.position}  model: {_model.transform.position}");
+                //Debug.Log($"Collider:{collider.transform.position}  model: {_model.transform.position}");
                 Ray ray = new Ray(_model.transform.position, direction);
 
                 Debug.DrawRay(ray.origin, ray.GetPoint(50f), Color.green, 10f);
@@ -115,18 +89,18 @@ public class Grenade : Weapon
                 if (collider.Raycast(ray, out hit, _radiusKilling))
                 {
                     proportion_damage = (_radiusKilling - hit.distance) / _radiusKilling;
-                    Debug.Log($"Raycast {collider.gameObject.name} {hit.distance} {proportion_damage}", collider);
+                   // Debug.Log($"Raycast {collider.gameObject.name} {hit.distance} {proportion_damage}", collider);
                 }
 
-                //var rigidbody = obj_character.GetComponent<Rigidbody>();
-                //if (rigidbody != null)
-                //{
-                //    rigidbody.AddForce(direction.normalized * 50f * rigidbody.mass /** proportion_damage*/, ForceMode.Impulse);
-                //    obj_character.GetComponent<CharacterAnimator>()?.SetAnimation("DamageTriggerGrenade");
-                //}
-                obj_character.ModifyHealth(-(Damage * proportion_damage));
+                var rigidbody = obj_character.GetComponent<Rigidbody>();
+                if (rigidbody != null)
+                {
+                    Debug.Log("AddForce");
+                    rigidbody.AddForce(direction * 5f * rigidbody.mass * proportion_damage, ForceMode.Impulse);
+                    //obj_character.GetComponent<CharacterAnimator>()?.SetAnimation("DamageTriggerGrenade");
+                }
+                //obj_character.ModifyHealth(-(Damage * proportion_damage));
             }
-
             //Destroy(this.gameObject);
         }
     }

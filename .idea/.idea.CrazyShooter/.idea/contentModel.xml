@@ -103,6 +103,7 @@
           <e p="LevelGenerationController.cs" t="Include" />
           <e p="Managers" t="Include">
             <e p="InputManager.cs" t="Include" />
+            <e p="ScoreManager.cs" t="Include" />
             <e p="SettingsManager.cs" t="Include" />
           </e>
           <e p="Medicine" t="Include">
@@ -110,6 +111,9 @@
           </e>
           <e p="SingletoneGameObject.cs" t="Include" />
           <e p="TestDebug.cs" t="Include" />
+          <e p="UserInterface" t="Include">
+            <e p="UIGameplayPanel.cs" t="Include" />
+          </e>
           <e p="Weapon" t="Include">
             <e p="Grenade.cs" t="Include" />
             <e p="Knife.cs" t="Include" />

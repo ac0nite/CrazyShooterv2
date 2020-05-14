@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] private Transform _rightHandBone = null;
     [SerializeField] private Transform _leftHandBone = null;
-    [SerializeField] private List<WeaponType> _weaponTypes = null;
+    //[SerializeField] private List<WeaponType> _weaponTypes = null;
     [SerializeField] private Inventory _inventoryComponent = null;
    
     public Weapon CurrentWeapon { get; set; }
