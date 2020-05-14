@@ -42,6 +42,21 @@ public class PlayerCharacterController : MonoBehaviour
                 _character.CharacterInventory.Drop(item);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            var r = _character.GetComponent<Rigidbody>();
+            if (r != null)
+            {
+                Debug.Log("Key U!!!");
+                r.AddForce(new Vector3(0.1f,0.5f,0.1f) * 10f * r.mass, ForceMode.Acceleration);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            _character.GetComponent<CharacterHealthComponent>()?.ModifyHealth(-10f);
+        }
     }
 
     private void OnDestroy()

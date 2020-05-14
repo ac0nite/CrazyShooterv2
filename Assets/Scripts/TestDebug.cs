@@ -20,8 +20,10 @@ public class TestDebug : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            var force = new Vector3(0, 0, 0.5f);
+            var force = new Vector3(0.1f, 0.1f, 0.1f);
             r.AddForce(force * 10f, ForceMode.Impulse);
+
+
             var tr = transform.TransformPoint(r.position);
 
             var tr2 = r.transform.TransformPoint(Vector3.zero);
