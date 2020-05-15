@@ -23,6 +23,11 @@ public class Grenade : Weapon
         ApplyGrenade(character);
     }
 
+
+    private void Start()
+    {
+        //StartCoroutine(Bang(null));
+    }
     private void ApplyGrenade(Character character)
     {
         _model.gameObject.SetActive(true);
@@ -74,34 +79,37 @@ public class Grenade : Weapon
                 var obj_character = collider.GetComponentInParent<CharacterHealthComponent>();
                 if(obj_character == null)
                     continue;
-                //var direction  = (obj_character.transform.position - _model.transform.posiiotn);
 
-                //obj_character.transform.position = _model.transform.position;
-                
-                var direction = (collider.transform.position - _model.transform.position);
-                //Debug.Log($"Collider:{collider.transform.position}  model: {_model.transform.position}");
+                var direction = collider.transform.position - _model.transform.position;
+
+                Debug.Log($"Collider:{collider.transform.position}  Grenade: {_model.transform.position}");
                 Ray ray = new Ray(_model.transform.position, direction);
 
-                Debug.DrawRay(ray.origin, ray.GetPoint(50f), Color.green, 10f);
+                //Debug.DrawRay(ray.origin, ray.direction, Color.green, 10f);
 
                 float proportion_damage = 0f;
                 RaycastHit hit;
                 if (collider.Raycast(ray, out hit, _radiusKilling))
                 {
                     proportion_damage = (_radiusKilling - hit.distance) / _radiusKilling;
-                   // Debug.Log($"Raycast {collider.gameObject.name} {hit.distance} {proportion_damage}", collider);
+
+                    //Debug.DrawLine(_model.transform.position, collider.transform.position, Color.red, 10f);
+                    Debug.DrawLine(ray.origin, ray.GetPoint(hit.distance), Color.red, 10f);
+
+                    Debug.Log($"Raycast {collider.gameObject.name} HitDistance:{hit.distance} PDamage: {proportion_damage}", collider);
                 }
 
                 var rigidbody = obj_character.GetComponent<Rigidbody>();
                 if (rigidbody != null)
                 {
                     Debug.Log("AddForce");
-                    rigidbody.AddForce(direction * 5f * rigidbody.mass * proportion_damage, ForceMode.Impulse);
+                    rigidbody.AddForce(direction * 4f * rigidbody.mass * proportion_damage, ForceMode.Impulse);
+                    //yield return new WaitForSeconds(2f);
                     //obj_character.GetComponent<CharacterAnimator>()?.SetAnimation("DamageTriggerGrenade");
                 }
-                //obj_character.ModifyHealth(-(Damage * proportion_damage));
+                obj_character.ModifyHealth(-(Damage * proportion_damage));
             }
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
