@@ -8,17 +8,19 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CharacterPickUpBehavior))]
 [RequireComponent(typeof(CharacterHealthComponent))]
 [RequireComponent(typeof(CharacterAnimator))]
-[RequireComponent(typeof(Medicine))]
+//[RequireComponent(typeof(Medicine))]
 public class Character : MonoBehaviour
 {
     private CharacterHealthComponent _characterHealthComponent = null;
     private CharacterAnimator _characterAnimator = null;
     private CharacterPickUpBehavior _characterPickUpBehavior = null;
+    private CharacterMovemevtBehavior _characterMovemevtBehavior = null;
 
     public Transform RightHandBone => _rightHandBone;
     public Transform LefttHandBone => _leftHandBone;
     public Inventory CharacterInventory => _inventoryComponent;
     public CharacterHealthComponent HealthComponent => _characterHealthComponent;
+    public CharacterMovemevtBehavior CharacterMovemevt => _characterMovemevtBehavior;
 
     [SerializeField] private Transform _rightHandBone = null;
     [SerializeField] private Transform _leftHandBone = null;
@@ -45,6 +47,7 @@ public class Character : MonoBehaviour
         _characterHealthComponent = GetComponent<CharacterHealthComponent>();
         _characterAnimator = GetComponent<CharacterAnimator>();
         _characterPickUpBehavior = GetComponent<CharacterPickUpBehavior>();
+        _characterMovemevtBehavior = GetComponent<CharacterMovemevtBehavior>();
 
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
        
@@ -104,9 +107,10 @@ public class Character : MonoBehaviour
     {
         if (CurrentWeapon.CanUse)
         {
-            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-            CurrentWeapon.Shoot();
             _characterAnimator.SetAnimation("AttackTrigger");
+            if(CurrentWeapon.Type != WeaponType.Heavy) //Heavy стреляет тройным вестрелом, поэтому обрабатывается по событию анимации 
+                CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion);
+            
         }
     }
 

@@ -6,16 +6,11 @@ using UnityEngine;
 
 public class Grenade : Weapon
 {
-    public override void Shoot()
-    {
-        //некая своя логика броска и взрыва
-        base.Shoot();
-    }
-
     [SerializeField] private float _timeSecondsBeforeBang = 2f;
     [SerializeField] private float _radiusKilling = 4f;
     [SerializeField] private Rigidbody _rigidbody = null;
     [SerializeField] private float _powerThrow = 15f;
+    public bool TimerBang = false;
     public override void ThrowGrenade(Character character)
     {
         CanUse = false;

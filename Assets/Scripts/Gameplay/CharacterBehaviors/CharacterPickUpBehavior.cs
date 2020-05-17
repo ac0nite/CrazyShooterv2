@@ -24,7 +24,7 @@ public class CharacterPickUpBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"OnTriggerEnter {this.gameObject.name} - {other.gameObject.name}", other);
+//        Debug.Log($"OnTriggerEnter {this.gameObject.name} - {other.gameObject.name}", other);
         var item = other.GetComponentInParent<InventoryItem>();
         if (item != null)
         {

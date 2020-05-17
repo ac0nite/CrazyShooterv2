@@ -301,12 +301,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6689589e7618482468822cb3ee248132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponModel: {fileID: 4419956044413125299}
+  _model: {fileID: 4419956044413125299}
+  _pickUpTrigger: {fileID: 8493920945940249233}
   _shootingPoint: {fileID: 7204773202171879530}
   _currentWeaponType: 1
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
-  _pickUpTrigger: {fileID: 8493920945940249233}
+  Damage: 50
+  _spreadWeapon: 8
+  CanUse: 1
 --- !u!1 &8650658317117448146
 GameObject:
   m_ObjectHideFlags: 0

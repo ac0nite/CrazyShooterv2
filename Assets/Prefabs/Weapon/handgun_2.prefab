@@ -346,7 +346,9 @@ MonoBehaviour:
   _currentWeaponType: 1
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
-  _damage: 50
+  Damage: 50
+  _spreadWeapon: 8
+  CanUse: 1
 --- !u!1 &7156300099903896680
 GameObject:
   m_ObjectHideFlags: 0

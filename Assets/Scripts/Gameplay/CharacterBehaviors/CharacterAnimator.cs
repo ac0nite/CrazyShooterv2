@@ -45,15 +45,26 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
-    private void EndAnimationGrenade()
+    private void EndAnimation()
     {
-        Debug.Log("EndAnimationGrenade");
+        Debug.Log("EndAnimation");
 
         var character = gameObject.GetComponent<Character>();
         if (character != null)
         {
             //Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
             character.CurrentWeapon.CanUse = true;
+        }
+    }
+
+    private void OneShot()
+    {
+        Debug.Log("OneShot");
+
+        var character = gameObject.GetComponent<Character>();
+        if (character != null)
+        {
+            character.CurrentWeapon.Shoot(character.CharacterMovemevt.StateLocomotion);
         }
     }
 }

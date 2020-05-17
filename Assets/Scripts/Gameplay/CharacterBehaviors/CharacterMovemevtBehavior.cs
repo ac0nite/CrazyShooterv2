@@ -4,6 +4,25 @@ using PolygonCrazyShooter;
 using UnityEditor;
 using UnityEngine;
 
+public enum TypeStateLocomotion
+{
+    idle = 0,
+    walk = 1,
+    run = 2
+}
+
+public static class WeaponTypeExtensions
+{
+    public static float DeltaScatterLocomotion(this TypeStateLocomotion _this)
+    {
+        if (_this == TypeStateLocomotion.walk)
+            return 2f / 100f;
+        if(_this == TypeStateLocomotion.run)
+            return 5f / 100f;
+
+        return 0f;
+    }
+}
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovemevtBehavior : MonoBehaviour
@@ -19,6 +38,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     private Vector3 _targetMovementVelocity = Vector3.zero;
     private Vector3 _lookVector = Vector3.zero;
     private bool _sprint = false;
+    public TypeStateLocomotion StateLocomotion = TypeStateLocomotion.idle;
 
     void Awake()
     {
@@ -75,7 +95,24 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Debug.Log($"{_currentVelocity} - {_currentVelocity.magnitude}");
+        
+        if(_currentVelocity.magnitude < 0.1f)
+            StateLocomotion = TypeStateLocomotion.idle;
+        else if (_currentVelocity.magnitude > 0f && _currentVelocity.magnitude <= 0.5f)
+            StateLocomotion = TypeStateLocomotion.walk;
+        else
+            StateLocomotion = TypeStateLocomotion.run;
+
+        //Debug.Log(StateLocomotion.ToString());
+        
         _rigidbody.velocity = new Vector3(_currentVelocity.x, _rigidbody.velocity.y, _currentVelocity.z);
         _rigidbody.rotation = _currentRotation;
+    }
+
+    public void SetSpeed((float, float) getSpeed)
+    {
+        _speed = getSpeed.Item1;
+        _VelocityLerpSpeed = getSpeed.Item2;
     }
 }

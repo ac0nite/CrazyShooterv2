@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class Knife : Weapon
 {
-    public override void Shoot()
+    public override void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle)
     {
-        //некая своя логика работы с ножём
-        //base.Shoot();
+        //base.Shoot(stateLocomotion);
     }
 
-    
     public void OnPullingTriggerEnter(Collider other)
     {
         //Debug.Log("!!!!!! OnTriggerEnter !!!!!!!!", other);
