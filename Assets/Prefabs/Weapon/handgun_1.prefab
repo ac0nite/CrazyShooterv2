@@ -158,7 +158,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4419956044413125296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.091, y: 1.116, z: 0.198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8650658317117932530}
@@ -308,7 +308,8 @@ MonoBehaviour:
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
   Damage: 50
-  _spreadWeapon: 8
+  _scatterForWeapon: 1
+  _scatterWeapon: 0
   CanUse: 1
 --- !u!1 &8650658317117448146
 GameObject:

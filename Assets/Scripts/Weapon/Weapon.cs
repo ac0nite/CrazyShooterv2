@@ -104,12 +104,13 @@ public class Weapon : InventoryItem
             // var rayOffset = Vector3.up * 0.1f * i;
             // Debug.DrawLine(ray.origin + rayOffset, hitList[i].point + rayOffset, Color.red, 3f);
 
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.transform.position = hitList[i].point;
+            sphere.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+
             //GamePlay code
             if (hitList[i].collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
             {
-                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sphere.transform.position = hitList[i].point;
-                sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 return;
             }
 
