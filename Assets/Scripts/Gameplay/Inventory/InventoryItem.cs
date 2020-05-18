@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
 namespace PolygonCrazyShooter
@@ -7,6 +8,7 @@ namespace PolygonCrazyShooter
     {
         [SerializeField] protected Transform _model = null;
         [SerializeField] private Collider _pickUpTrigger = null;
+        [SerializeField] public String Name = "Default";
 
         public virtual void PickUp()
         {

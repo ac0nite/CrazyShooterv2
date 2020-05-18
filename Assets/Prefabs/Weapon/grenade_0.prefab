@@ -259,17 +259,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 1163553219257812873}
   _pickUpTrigger: {fileID: 6382563838600855467}
+  Name: "\u0413\u0440\u0430\u043D\u0430\u0442\u0430"
   _shootingPoint: {fileID: 5660863001452832080}
   _currentWeaponType: 5
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
   Damage: 200
+  _scatterForWeapon: 1
+  _scatterWeapon: 0
   CanUse: 1
-  TimerBang: 0
   _timeSecondsBeforeBang: 4
   _radiusKilling: 5
   _rigidbody: {fileID: 642410841089411987}
   _powerThrow: 15
+  TimerBang: 0
 --- !u!1 &7940130394847956799
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterMovemevtBehavior))]
 [RequireComponent(typeof(Character))]
 public class PlayerCharacterController : MonoBehaviour
 {
-    private Character _character = null;
+    public Character Character = null;
     private CharacterMovemevtBehavior _characterMovemevtBehavior;
     private void Awake()
     {
-        _character = GetComponent<Character>();
+        Character = GetComponent<Character>();
         _characterMovemevtBehavior = GetComponent<CharacterMovemevtBehavior>();
         
         InputManager.Instance.EventShootingWeapon += OnShootingWeapon;
@@ -27,25 +28,25 @@ public class PlayerCharacterController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            var weapons = _character.CharacterInventory.Items.FindAll(i => i.GetType() == typeof(Weapon));
-            var currenWeaponIndex = weapons.IndexOf(_character.CurrentWeapon);
+            var weapons = Character.CharacterInventory.Items.FindAll(i => i.GetType() == typeof(Weapon));
+            var currenWeaponIndex = weapons.IndexOf(Character.CurrentWeapon);
             var nextWeapon = weapons[(currenWeaponIndex+1) % weapons.Count];
-            nextWeapon.Apply(_character);
+            nextWeapon.Apply(Character);
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
             var item = 
-                _character.CharacterInventory.Items.Find(i => i != _character.CurrentWeapon);
+                Character.CharacterInventory.Items.Find(i => i != Character.CurrentWeapon);
             if (item != null)
             {
-                _character.CharacterInventory.Drop(item);
+                Character.CharacterInventory.Drop(item);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            var r = _character.GetComponent<Rigidbody>();
+            var r = Character.GetComponent<Rigidbody>();
             if (r != null)
             {
                 Debug.Log("Key U!!!");
@@ -55,7 +56,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            _character.GetComponent<CharacterHealthComponent>()?.ModifyHealth(-10f);
+            Character.GetComponent<CharacterHealthComponent>()?.ModifyHealth(-10f);
         }
     }
 
@@ -75,7 +76,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //доступно ли то или иное оружий!!!
 
-        _character.ChangeWeapon((WeaponType)(keyCode - 48));
+        Character.ChangeWeapon((WeaponType)(keyCode - 48));
     }
 
     private void OnPlayerMovementDirectionChanged(Vector3 targetDirection)
@@ -92,16 +93,16 @@ public class PlayerCharacterController : MonoBehaviour
         if(!isShootingStarter)
             return;
         
-        _character.Shoot();
+        Character.Shoot();
     }
 
     private void OnPickUpItemBtttonPressed()
     {
-        _character.TryPickUpItem();
+        Character.TryPickUpItem();
     }
 
     private void OnThrownigGrenade()
     {
-        _character.ThrowGrenade();
+        Character.ThrowGrenade();
     }
 }

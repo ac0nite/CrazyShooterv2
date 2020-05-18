@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIGameplayPanel : MonoBehaviour
+public class UI_GameplayPanel : MonoBehaviour
 {
     [SerializeField] private Text _scorelabelText = null;
     [SerializeField] private Slider _playerHealthProgressBaSlider = null;
     [SerializeField] private GameObject _pauseDummy = null;
+    [SerializeField] private GameObject _inventoryPanelDummy = null;
     [SerializeField] private ScoreManager _scoreManager = null;
     private float _score = 0;
+    
 
     private void Awake()
     {
@@ -50,11 +52,19 @@ public class UIGameplayPanel : MonoBehaviour
         _pauseDummy.SetActive(true);
         Time.timeScale = 0f;
     }
+    
+    public void OnInventoryPanelButtonClicked()
+    {
+        Debug.Log("OnInventoryPanelButtonClicked");
+        _inventoryPanelDummy.SetActive(true);
+        Time.timeScale = 0f;
+    }
 
     public void OnResumeButtonClicked()
     {
         Debug.Log("OnResumeButtonClicked");
         _pauseDummy.SetActive(false);
+        _inventoryPanelDummy.SetActive(false);
         Time.timeScale = 1f;
     }
 

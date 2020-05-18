@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class Inventory : MonoBehaviour
 {
     public readonly List<InventoryItem> Items = new List<InventoryItem>();
 
+    public event Action<InventoryItem> EventItemPickedUp;
+    public event Action<InventoryItem> EventItemDropedDown;
+    
     public void PickUp(InventoryItem item)
     { 
         Items.Add(item);
@@ -16,6 +20,8 @@ public class Inventory : MonoBehaviour
         item.transform.localRotation = Quaternion.identity;
 
         item.PickUp();
+        
+        EventItemPickedUp?.Invoke(item);
     }
 
     public void Drop(InventoryItem item)
@@ -24,5 +30,7 @@ public class Inventory : MonoBehaviour
         item.transform.SetParent(null);
 
         item.Drop();
+        
+        EventItemDropedDown?.Invoke(item);
     }
 }
