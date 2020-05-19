@@ -38,10 +38,10 @@ public static class WeaponTypeExtensions
                 return (5.5f, 4.5f);
 
             if(_this == WeaponType.Infantry)
-                return (4f, 3f);
+                return (5f, 4f);
             
             if(_this == WeaponType.Heavy)
-                return (3.5f, 2.5f);
+                return (4.5f, 3.5f);
             
             return (0f, 0f);
         }

@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     
     public void PickUp(InventoryItem item)
     { 
+        Debug.Log("PickUp");
         Items.Add(item);
 
         item.transform.SetParent(transform); //имеем ввиду что находимся под персонажем
@@ -20,8 +21,13 @@ public class Inventory : MonoBehaviour
         item.transform.localRotation = Quaternion.identity;
 
         item.PickUp();
-        
-        EventItemPickedUp?.Invoke(item);
+
+        if (EventItemPickedUp != null)
+        {
+            Debug.Log("EventItemPickedUp");
+            EventItemPickedUp(item);
+        }
+        //EventItemPickedUp?.Invoke(item);
     }
 
     public void Drop(InventoryItem item)

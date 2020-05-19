@@ -50,7 +50,10 @@ public class Character : MonoBehaviour
         _characterMovemevtBehavior = GetComponent<CharacterMovemevtBehavior>();
 
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
-       
+    }
+
+    private void Start()
+    {
         var defaultWeapon = GetComponentInChildren<Weapon>();
         //var defaultWeapon = Instantiate(SettingsManager.Instance.Weapons[0], transform);
 
@@ -60,8 +63,8 @@ public class Character : MonoBehaviour
             //PickUpWeapon(defaultWeapon);
             _inventoryComponent.PickUp(defaultWeapon);
             defaultWeapon.Apply(this);
-          //  ApplyWeapon(defaultWeapon);
-        }
+            //  ApplyWeapon(defaultWeapon);
+        }     
     }
 
     public void ApplyWeapon(Weapon weapon)

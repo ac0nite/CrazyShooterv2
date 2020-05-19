@@ -112,6 +112,7 @@
           <e p="SingletoneGameObject.cs" t="Include" />
           <e p="TestDebug.cs" t="Include" />
           <e p="UserInterface" t="Include">
+            <e p="UI_CurrentWeaponSlot.cs" t="Include" />
             <e p="ui_GameplayPanel.cs" t="Include" />
             <e p="UI_InventoryItemElement.cs" t="Include" />
             <e p="ui_InventoryPanel.cs" t="Include" />

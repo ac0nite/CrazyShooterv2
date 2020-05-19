@@ -14,7 +14,9 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<KeyCode> EventPlayerChangeWeapon;
     public Action EventPickUpItemButtonPressed;
     public Action EventThrownigGrenade;
+    public Action<bool> EventOpenInventoryItem;
 
+    private bool _pause = false;
 
     private Vector3 _targetMovementVelocity = Vector3.zero;
     protected  override void Awake()
@@ -25,6 +27,18 @@ public class InputManager : SingletoneGameObject<InputManager>
 
     private void Update()
     {
+        ///
+        /// InventoryPanel (pause)
+        /// 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _pause = !_pause;
+            EventOpenInventoryItem?.Invoke(_pause);
+        }
+        
+        if (_pause)
+            return;
+
         Vector3 _newVelocity = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -70,7 +84,7 @@ public class InputManager : SingletoneGameObject<InputManager>
             EventPlayerChangeWeapon?.Invoke(KeyCode.Alpha3);
         if (Input.GetKeyDown(KeyCode.Alpha4))
             EventPlayerChangeWeapon?.Invoke(KeyCode.Alpha4);
-        
+
         ///
         /// grenade
         ///
