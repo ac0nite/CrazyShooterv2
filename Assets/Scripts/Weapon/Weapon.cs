@@ -71,7 +71,7 @@ public class Weapon : InventoryItem
     }
     public virtual void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle)
     {
-        var type_locomotion = GetComponentInParent<CharacterMovemevtBehavior>()?.StateLocomotion;
+        //var type_locomotion = GetComponentInParent<CharacterMovemevtBehavior>()?.StateLocomotion;
         //Debug.Log($"StateLocomotion: {type_locomotion.ToString()}");
         
         CanUse = false;
@@ -81,7 +81,7 @@ public class Weapon : InventoryItem
         //Debug.DrawRay(ray_tmp.origin, ray_tmp.GetPoint(100f), Color.black, 10f);
         var hit_list_tmp = hit_tmp.ToList();
         hit_list_tmp.Sort((x,y)=>x.distance.CompareTo(y.distance));
-        Debug.DrawLine(_shootingPoint.position, hit_list_tmp[hit_list_tmp.Count-1].point, Color.black, 10f);
+        //Debug.DrawLine(_shootingPoint.position, hit_list_tmp[hit_list_tmp.Count-1].point, Color.black, 10f);
 
         var direct_ray = hit_list_tmp[0].point - _shootingPoint.position;
         
@@ -90,7 +90,7 @@ public class Weapon : InventoryItem
         var ray = Scatter(new Ray(_shootingPoint.position, direct_ray), stateLocomotion);
         
         //var ray = new Ray(_shootingPoint.position, transform.forward); //_shootingPoint.forward
-        Debug.DrawLine(ray.origin, ray.GetPoint(50f), Color.red, 3f);
+        //Debug.DrawLine(ray.origin, ray.GetPoint(50f), Color.red, 3f);
             
         var rayCastHit = Physics.RaycastAll(ray, float.MaxValue, LayerMask.GetMask("Enemies", "Obstacles"));
 
