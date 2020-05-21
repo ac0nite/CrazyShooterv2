@@ -110,7 +110,7 @@ public class Character : MonoBehaviour
     {
         if (CurrentWeapon.CanUse)
         {
-            _characterAnimator.SetAnimation("AttackTrigger");
+            _characterAnimator.SetAnimation("AttackTriggerA");
             if(CurrentWeapon.Type != WeaponType.Heavy) //Heavy стреляет тройным вестрелом, поэтому обрабатывается по событию анимации 
                 CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion);
             

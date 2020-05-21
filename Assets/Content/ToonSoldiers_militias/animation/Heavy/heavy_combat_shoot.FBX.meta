@@ -215,7 +215,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.33076924
+      - time: 0.35021368
         functionName: EndAnimation
         data: 
         objectReferenceParameter: {instanceID: 0}

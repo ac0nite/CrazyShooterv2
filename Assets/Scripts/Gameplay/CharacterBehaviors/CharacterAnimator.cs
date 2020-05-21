@@ -11,6 +11,7 @@ public class CharacterAnimator : MonoBehaviour
 
     public void Die()
     {
+        _animator.SetLayerWeight(1,0f);
         _animator.SetTrigger("DeathTrigger");
     }
     

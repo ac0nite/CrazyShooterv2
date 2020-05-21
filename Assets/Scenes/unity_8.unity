@@ -2551,6 +2551,11 @@ PrefabInstance:
       propertyPath: Name
       value: Glock
       objectReference: {fileID: 0}
+    - target: {fileID: 1905029576699294822, guid: 4c2fc062a9198514e8aa0647367ae510,
+        type: 3}
+      propertyPath: _scatterForWeapon
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2458788713289381963, guid: 4c2fc062a9198514e8aa0647367ae510,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -5800,7 +5805,7 @@ PrefabInstance:
     - target: {fileID: 5404898729296496666, guid: 368ddbbe5fc1c8242a8410157a227da0,
         type: 3}
       propertyPath: _scatterForWeapon
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5404898729296496666, guid: 368ddbbe5fc1c8242a8410157a227da0,
         type: 3}
@@ -6086,6 +6091,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949229561413387297, guid: 6032b717dd74f1c4b91e55a7f387e0eb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 660282beb330c0f4f899787103d7df61, type: 2}
+    - target: {fileID: 7422909545748252899, guid: 6032b717dd74f1c4b91e55a7f387e0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.041310586
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422909545748252899, guid: 6032b717dd74f1c4b91e55a7f387e0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.036316123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6032b717dd74f1c4b91e55a7f387e0eb, type: 3}
