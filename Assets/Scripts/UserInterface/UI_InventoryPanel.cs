@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
 
-public class UI_InventoryPanel : MonoBehaviour
+public class UI_InventoryPanel : UI_Panel
 {
     [SerializeField] private UI_InventoryItemElement _uiInventoryItemElementPrefab = null;
     [SerializeField] private RectTransform _listContentParent = null;
@@ -71,5 +71,10 @@ public class UI_InventoryPanel : MonoBehaviour
     {
         _inventoryNewItemElement.CurrentWeapon.Apply(_playerCharacterController.Character);
         _inventoryOldItemElement?.transform.SetParent(_listContentParent);
+    }
+
+    public void OnResumeButtonClick()
+    {
+        UIManager.Instance.ShowPanel(UI_PanelType.GamePlay);
     }
 }

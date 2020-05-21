@@ -21,7 +21,9 @@ public class PlayerCharacterController : MonoBehaviour
         InputManager.Instance.EventPlayerSprintMode += OnPlayerSprintMode;
         InputManager.Instance.EventPlayerChangeWeapon += OnPlayerChangeWeapon;
         InputManager.Instance.EventPickUpItemButtonPressed += OnPickUpItemBtttonPressed;
-        InputManager.Instance.EventThrownigGrenade += OnThrownigGrenade;
+        InputManager.Instance.EventThrowningGrenade += OnThrownigGrenade;
+        InputManager.Instance.EventOpenInventoryItem += OnOpenInventoryItem;
+        InputManager.Instance.EventPause += OnPause;
     }
 
     private void Update()
@@ -69,6 +71,8 @@ public class PlayerCharacterController : MonoBehaviour
             InputManager.Instance.EventPlayerSprintMode -= OnPlayerSprintMode;
             InputManager.Instance.EventPlayerChangeWeapon -= OnPlayerChangeWeapon;
             InputManager.Instance.EventPickUpItemButtonPressed -= OnPickUpItemBtttonPressed;
+            InputManager.Instance.EventOpenInventoryItem -= OnOpenInventoryItem;
+            InputManager.Instance.EventPause -= OnPause;
         }
     }
 
@@ -104,5 +108,16 @@ public class PlayerCharacterController : MonoBehaviour
     private void OnThrownigGrenade()
     {
         Character.ThrowGrenade();
+    }
+
+    private void OnOpenInventoryItem(bool _active)
+    {
+        UIManager.Instance.ShowPanel(_active ? UI_PanelType.Inventory : UI_PanelType.GamePlay);
+        _characterMovemevtBehavior.ChangePlayerMovementDirectionChanged(Vector3.zero);
+    }
+
+    private void OnPause(bool _active)
+    {
+        UIManager.Instance.ShowPanel(_active ? UI_PanelType.Pause : UI_PanelType.GamePlay);
     }
 }

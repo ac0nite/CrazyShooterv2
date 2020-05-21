@@ -9,6 +9,10 @@ public class CharacterAnimator : MonoBehaviour
     public Transform LeftHandIKTarget { get; set; }
     public Transform RightHandIKTarget { get; set; }
 
+    public event Action EventStartFlyingGrenade;
+    public event Action EventEndAnimation;
+    public event Action EventOneShot; //используется в пулемёте
+
     public void Die()
     {
         _animator.SetLayerWeight(1,0f);
@@ -39,6 +43,8 @@ public class CharacterAnimator : MonoBehaviour
     
     private void StartFlyingGrenade()
     {
+        EventStartFlyingGrenade?.Invoke();
+
         var grenades = gameObject.GetComponentsInChildren<Grenade>();
         if (grenades.Length > 0)
         {
@@ -49,6 +55,7 @@ public class CharacterAnimator : MonoBehaviour
     private void EndAnimation()
     {
         Debug.Log("EndAnimation");
+        EventEndAnimation?.Invoke();
 
         var character = gameObject.GetComponent<Character>();
         if (character != null)
@@ -61,6 +68,7 @@ public class CharacterAnimator : MonoBehaviour
     private void OneShot()
     {
         Debug.Log("OneShot");
+        EventOneShot?.Invoke();
 
         var character = gameObject.GetComponent<Character>();
         if (character != null)

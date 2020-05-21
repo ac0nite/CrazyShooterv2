@@ -13,8 +13,9 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<bool> EventShootingWeapon;
     public Action<KeyCode> EventPlayerChangeWeapon;
     public Action EventPickUpItemButtonPressed;
-    public Action EventThrownigGrenade;
+    public Action EventThrowningGrenade;
     public Action<bool> EventOpenInventoryItem;
+    public Action<bool> EventPause;
 
     private bool _pause = false;
 
@@ -28,14 +29,20 @@ public class InputManager : SingletoneGameObject<InputManager>
     private void Update()
     {
         ///
-        /// InventoryPanel (pause)
+        /// InventoryPanel
         /// 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             _pause = !_pause;
             EventOpenInventoryItem?.Invoke(_pause);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _pause = !_pause;
+            EventPause?.Invoke(_pause);
+        }
+
         if (_pause)
             return;
 
@@ -89,7 +96,7 @@ public class InputManager : SingletoneGameObject<InputManager>
         /// grenade
         ///
         if(Input.GetKeyDown(KeyCode.G))
-            EventThrownigGrenade?.Invoke();
+            EventThrowningGrenade?.Invoke();
 
         ///
         /// shooting

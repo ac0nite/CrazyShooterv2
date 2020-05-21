@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterHealthComponent : MonoBehaviour
 {
     public event Action<CharacterHealthComponent> EventCharacterDead;
-    public event Action<CharacterHealthComponent, float> EventHealthChange; 
+    public event Action<CharacterHealthComponent, float> EventHealthChange;
     [SerializeField] public float MaxHealth = 100f;
     public float Health { get; private set; }
     private void Start()

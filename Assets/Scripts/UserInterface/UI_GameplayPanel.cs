@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_GameplayPanel : MonoBehaviour
+public class UI_GameplayPanel : UI_Panel
 {
     [SerializeField] private Text _scorelabelText = null;
     [SerializeField] private Slider _playerHealthProgressBaSlider = null;
-    [SerializeField] private GameObject _pauseDummy = null;
-    [SerializeField] private GameObject _inventoryPanelDummy = null;
+    //[SerializeField] private GameObject _pauseDummy = null;
+    //[SerializeField] private GameObject _inventoryPanelDummy = null;
     [SerializeField] private ScoreManager _scoreManager = null;
-    private float _score = 0;
-    
 
     private void Awake()
     {
@@ -48,24 +46,18 @@ public class UI_GameplayPanel : MonoBehaviour
 
     public void OnPauseButtonClicked()
     {
-        Debug.Log("OnPauseButtonClicked");
-        _pauseDummy.SetActive(true);
-        Time.timeScale = 0f;
+        //Debug.Log("OnPauseButtonClicked");
+        //_pauseDummy.SetActive(true);
+        //Time.timeScale = 0f;
+        UIManager.Instance.ShowPanel(UI_PanelType.Pause);
     }
     
     public void OnInventoryPanelButtonClicked()
     {
-        Debug.Log("OnInventoryPanelButtonClicked");
-        _inventoryPanelDummy.SetActive(true);
-        //Time.timeScale = 0f;
-    }
-
-    public void OnResumeButtonClicked()
-    {
-        Debug.Log("OnResumeButtonClicked");
-        _pauseDummy.SetActive(false);
-        _inventoryPanelDummy.SetActive(false);
-        Time.timeScale = 1f;
+        //Debug.Log("OnInventoryPanelButtonClicked");
+        //_inventoryPanelDummy.SetActive(true);
+        ////Time.timeScale = 0f;
+        UIManager.Instance.ShowPanel(UI_PanelType.Inventory);
     }
 
     private void OnCurrentScoreChanged(int score)

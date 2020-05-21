@@ -49,6 +49,7 @@ public class Character : MonoBehaviour
         _characterPickUpBehavior = GetComponent<CharacterPickUpBehavior>();
         _characterMovemevtBehavior = GetComponent<CharacterMovemevtBehavior>();
 
+        _characterHealthComponent.EventHealthChange += OnHealthChange;
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
     }
 
@@ -126,6 +127,14 @@ public class Character : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             collider.enabled = false;
+        }
+    }
+
+    private void OnHealthChange(CharacterHealthComponent _characterHealth, float _health)
+    {
+        if (_health != 0f)
+        {
+            _characterAnimator.SetAnimation("DamageTrigger");
         }
     }
 
