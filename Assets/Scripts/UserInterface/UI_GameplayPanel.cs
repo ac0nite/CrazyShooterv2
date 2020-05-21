@@ -57,7 +57,7 @@ public class UI_GameplayPanel : MonoBehaviour
     {
         Debug.Log("OnInventoryPanelButtonClicked");
         _inventoryPanelDummy.SetActive(true);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 
     public void OnResumeButtonClicked()

@@ -9,6 +9,7 @@ public class UI_InventoryPanel : MonoBehaviour
     [SerializeField] private UI_InventoryItemElement _uiInventoryItemElementPrefab = null;
     [SerializeField] private RectTransform _listContentParent = null;
     [SerializeField] private PlayerCharacterController _playerCharacterController = null;
+    [SerializeField] private UI_CurrentWeaponSlot _uiCurrentWeaponSlot = null;
 
     private Dictionary<InventoryItem, UI_InventoryItemElement> _itemToListElementDicrinory =
         new Dictionary<InventoryItem, UI_InventoryItemElement>();
@@ -16,9 +17,16 @@ public class UI_InventoryPanel : MonoBehaviour
     {
         _playerCharacterController.Character.CharacterInventory.EventItemPickedUp += OnItemPickedUp;
         _playerCharacterController.Character.CharacterInventory.EventItemDropedDown += OnItemDropedDown;
+
+        _uiCurrentWeaponSlot.EventWeaponAssigned += OnWeaponAssigned;
+
         foreach (var item in _playerCharacterController.Character.CharacterInventory.Items)
         {
-            SpawnInventoryItemElement(item);
+            var ui_element = SpawnInventoryItemElement(item);
+            if (_playerCharacterController.Character.CurrentWeapon == ui_element.CurrentWeapon)
+            {
+                _uiCurrentWeaponSlot.AssignElementSlot(ui_element);
+            }
         }
     }
 
@@ -29,18 +37,19 @@ public class UI_InventoryPanel : MonoBehaviour
             _playerCharacterController.Character.CharacterInventory.EventItemPickedUp -= OnItemPickedUp;
             _playerCharacterController.Character.CharacterInventory.EventItemDropedDown -= OnItemDropedDown;
         }
+
+        _uiCurrentWeaponSlot.EventWeaponAssigned -= OnWeaponAssigned;
     }
 
-    private void SpawnInventoryItemElement(InventoryItem item)
+    private UI_InventoryItemElement SpawnInventoryItemElement(InventoryItem item)
     {
         var ui_element = Instantiate(_uiInventoryItemElementPrefab);
         ui_element.transform.SetParent(_listContentParent);
         ui_element.SetInfo(item);
         
-        // if (_itemToListElementDicrinory[item] != null)
-        //     _itemToListElementDicrinory[item] = ui_element;
-        // else
-            _itemToListElementDicrinory.Add(item, ui_element);
+        _itemToListElementDicrinory.Add(item, ui_element);
+
+        return ui_element;
     }
 
     private void RemoveInventoryItemElement(InventoryItem item)
@@ -56,5 +65,11 @@ public class UI_InventoryPanel : MonoBehaviour
     private void OnItemDropedDown(InventoryItem item)
     {
         RemoveInventoryItemElement(item);
+    }
+
+    private void OnWeaponAssigned(UI_InventoryItemElement _inventoryNewItemElement, UI_InventoryItemElement _inventoryOldItemElement)
+    {
+        _inventoryNewItemElement.CurrentWeapon.Apply(_playerCharacterController.Character);
+        _inventoryOldItemElement?.transform.SetParent(_listContentParent);
     }
 }

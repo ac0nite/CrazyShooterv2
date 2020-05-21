@@ -134,11 +134,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 2978413178761075213}
   _pickUpTrigger: {fileID: 2978413177817616824}
+  Name: "\u041D\u043E\u0436"
   _shootingPoint: {fileID: 0}
   _currentWeaponType: 4
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
-  _damage: 50
+  Damage: 50
+  _scatterForWeapon: 1
+  _scatterWeapon: 0
+  CanUse: 1
 --- !u!1 &2978413178759963339
 GameObject:
   m_ObjectHideFlags: 0

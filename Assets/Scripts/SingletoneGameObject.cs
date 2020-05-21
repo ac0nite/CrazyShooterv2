@@ -15,7 +15,7 @@ namespace PolygonCrazyShooter
 
                 if (_instance == null)
                 {
-                    var holderObject = new GameObject($"Sinhleton_{typeof(T)}");
+                    var holderObject = new GameObject($"Singleton_{typeof(T)}");
                     _instance = holderObject.AddComponent<T>();
                     DontDestroyOnLoad(holderObject);
                 }

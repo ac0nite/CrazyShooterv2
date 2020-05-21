@@ -719,6 +719,7 @@ MonoBehaviour:
     type: 3}
   _listContentParent: {fileID: 34525934}
   _playerCharacterController: {fileID: 445551855}
+  _uiCurrentWeaponSlot: {fileID: 1377890008}
 --- !u!1 &348978799
 GameObject:
   m_ObjectHideFlags: 0
@@ -5540,6 +5541,11 @@ PrefabInstance:
       propertyPath: _scatterWeapon
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8176966133278739481, guid: 38cac98895b727648abd8944d007f5e2,
+        type: 3}
+      propertyPath: Name
+      value: "\u0410\u041A-74"
+      objectReference: {fileID: 0}
     - target: {fileID: 8176966133278739482, guid: 38cac98895b727648abd8944d007f5e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5608,6 +5614,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: medicine_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997694465887776101, guid: 3b10924e62f1cea4eb78a440d6fcc81e,
+        type: 3}
+      propertyPath: Name
+      value: "\u0410\u043F\u0442\u0435\u0447\u043A\u0430"
       objectReference: {fileID: 0}
     - target: {fileID: 8329385442262572001, guid: 3b10924e62f1cea4eb78a440d6fcc81e,
         type: 3}
