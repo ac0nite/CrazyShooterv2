@@ -105,6 +105,7 @@
             <e p="InputManager.cs" t="Include" />
             <e p="ScoreManager.cs" t="Include" />
             <e p="SettingsManager.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
           </e>
           <e p="Medicine" t="Include">
             <e p="Medicine.cs" t="Include" />
@@ -116,6 +117,9 @@
             <e p="ui_GameplayPanel.cs" t="Include" />
             <e p="UI_InventoryItemElement.cs" t="Include" />
             <e p="ui_InventoryPanel.cs" t="Include" />
+            <e p="UI_Panel.cs" t="Include" />
+            <e p="UI_PanelType.cs" t="Include" />
+            <e p="UI_PausePanel.cs" t="Include" />
           </e>
           <e p="Weapon" t="Include">
             <e p="Grenade.cs" t="Include" />

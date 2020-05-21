@@ -51,6 +51,9 @@ public class Character : MonoBehaviour
 
         _characterHealthComponent.EventHealthChange += OnHealthChange;
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
+        _characterAnimator.EventStartFlyingGrenade += OnStartFlyingGrenade;
+        _characterAnimator.EventEndAnimation += OnEventEndAnimation;
+        _characterAnimator.EventOneShot += OnOneShoot;
     }
 
     private void Start()
@@ -97,6 +100,10 @@ public class Character : MonoBehaviour
     private void OnDestroy()
     {
         _characterHealthComponent.EventCharacterDead -= OnCharacterDead;
+        _characterHealthComponent.EventHealthChange -= OnHealthChange;
+        _characterAnimator.EventStartFlyingGrenade -= OnStartFlyingGrenade;
+        _characterAnimator.EventEndAnimation -= OnEventEndAnimation;
+        _characterAnimator.EventOneShot += OnOneShoot;
     }
 
     protected virtual void Update()
@@ -199,5 +206,23 @@ public class Character : MonoBehaviour
                 CurrentWeapon.CanUse = false;
             }
         }
+    }
+
+    private void OnStartFlyingGrenade()
+    {
+        //Debug.Log("OnStartFlyingGrenade");
+        var grenade = CharacterInventory.Items.Find(i => i.GetType() == typeof(Grenade));
+        CharacterInventory.Drop(grenade);
+        ((Grenade)grenade).StartFlying();
+    }
+
+    private void OnEventEndAnimation()
+    {
+        CurrentWeapon.CanUse = true;
+    }
+
+    private void OnOneShoot()
+    {
+        CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion);
     }
 }

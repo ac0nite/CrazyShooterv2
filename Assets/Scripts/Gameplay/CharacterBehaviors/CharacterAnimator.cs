@@ -44,25 +44,18 @@ public class CharacterAnimator : MonoBehaviour
     private void StartFlyingGrenade()
     {
         EventStartFlyingGrenade?.Invoke();
-
-        var grenades = gameObject.GetComponentsInChildren<Grenade>();
-        if (grenades.Length > 0)
-        {
-            grenades[0].StartFlying();
-        }
     }
 
     private void EndAnimation()
     {
         Debug.Log("EndAnimation");
         EventEndAnimation?.Invoke();
-
-        var character = gameObject.GetComponent<Character>();
-        if (character != null)
-        {
-            //Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
-            character.CurrentWeapon.CanUse = true;
-        }
+        // var character = gameObject.GetComponent<Character>();
+        // if (character != null)
+        // {
+        //     //Debug.Log($"Character {character.CurrentWeapon.name} CanUse = true");
+        //     character.CurrentWeapon.CanUse = true;
+        // }
     }
 
     private void OneShot()
@@ -70,10 +63,10 @@ public class CharacterAnimator : MonoBehaviour
         Debug.Log("OneShot");
         EventOneShot?.Invoke();
 
-        var character = gameObject.GetComponent<Character>();
-        if (character != null)
-        {
-            character.CurrentWeapon.Shoot(character.CharacterMovemevt.StateLocomotion);
-        }
+        // var character = gameObject.GetComponent<Character>();
+        // if (character != null)
+        // {
+        //     character.CurrentWeapon.Shoot(character.CharacterMovemevt.StateLocomotion);
+        // }
     }
 }

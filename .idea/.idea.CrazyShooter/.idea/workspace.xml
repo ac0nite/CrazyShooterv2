@@ -98,10 +98,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/UserInterface/UIGameplayPanel.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterPickUpBehavior.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/58A34B0A-618D-424B-B5FC-18BB9BCDAC20/8f/b4d25f5b/Object.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Grenade.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Knife.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/StreamWeapon.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterMovemevtBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UserInterface/ui_GameplayPanel.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UserInterface/UI_InventoryItemListItem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Medicine/Medicine.cs" />
@@ -114,9 +112,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UserInterface/UI_InventoryItemElement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UserInterface/UI_CurrentWeaponSlot.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Grenade.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/Character.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterAnimator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterMovemevtBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Camera/MoverCamera.cs" />
       </list>
     </option>
   </component>
@@ -138,10 +139,10 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys_rider" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="22520">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="22520" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -188,6 +189,7 @@
       <workItem from="1589835878302" duration="1251000" />
       <workItem from="1589914582098" duration="7816000" />
       <workItem from="1590002555266" duration="5322000" />
+      <workItem from="1590089564553" duration="8332000" />
     </task>
     <servers />
   </component>
@@ -309,19 +311,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapon/Grenade.cs</url>
-          <line>48</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Grenade.cs" initialLine="44">
-            <startOffsets>
-              <option value="1248" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1318" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs</url>
           <line>81</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" initialLine="80">
@@ -339,10 +328,10 @@
           <line>62</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/CharacterAnimator.cs" initialLine="61">
             <startOffsets>
-              <option value="1797" />
+              <option value="1940" />
             </startOffsets>
             <endOffsets>
-              <option value="1818" />
+              <option value="1942" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="27" />
@@ -362,7 +351,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/Character.cs</url>
-          <line>114</line>
+          <line>122</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterBehaviors/Character.cs" initialLine="110">
             <startOffsets>
               <option value="3945" />

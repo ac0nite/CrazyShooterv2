@@ -265,7 +265,7 @@ MonoBehaviour:
   LeftHadIKTargetPoint: {fileID: 0}
   RightHadIKTargetPoint: {fileID: 0}
   Damage: 200
-  _scatterForWeapon: 1
+  _scatterForWeapon: 0
   _scatterWeapon: 0
   CanUse: 1
   _timeSecondsBeforeBang: 4

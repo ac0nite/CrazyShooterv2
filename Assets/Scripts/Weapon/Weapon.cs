@@ -90,7 +90,7 @@ public class Weapon : InventoryItem
         var ray = Scatter(new Ray(_shootingPoint.position, direct_ray), stateLocomotion);
         
         //var ray = new Ray(_shootingPoint.position, transform.forward); //_shootingPoint.forward
-        //Debug.DrawLine(ray.origin, ray.GetPoint(50f), Color.red, 3f);
+        Debug.DrawLine(ray.origin, ray.GetPoint(50f), Color.red, 3f);
             
         var rayCastHit = Physics.RaycastAll(ray, float.MaxValue, LayerMask.GetMask("Enemies", "Obstacles"));
 

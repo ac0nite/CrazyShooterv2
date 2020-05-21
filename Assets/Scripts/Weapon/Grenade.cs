@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PolygonCrazyShooter;
 using Unity.Jobs.LowLevel.Unsafe;
@@ -11,6 +12,7 @@ public class Grenade : Weapon
     [SerializeField] private Rigidbody _rigidbody = null;
     [SerializeField] private float _powerThrow = 15f;
     public bool TimerBang = false;
+
     public override void ThrowGrenade(Character character)
     {
         CanUse = false;
@@ -33,41 +35,27 @@ public class Grenade : Weapon
         Debug.Log("Create StartCoroutine");
         StartCoroutine(Bang(character));
     }
-
+    
     public void StartFlying()
     {
-        Debug.Log("FlyingTest");
-        var character = this.GetComponentInParent<Character>();
-        if (character != null)
-        {
-            CanUse = true;
-            character.CharacterInventory.Drop(this);
-            Debug.Log("AddForce", this);
-           // _shootingPoint.TransformPoint()
-           
-           var r2 = gameObject.GetComponentInChildren<Rigidbody>();
-           r2.AddForce(_shootingPoint.transform.forward * _powerThrow, ForceMode.Impulse);
-        }
+        CanUse = true;
+        Debug.Log("AddForce", this);
+        _rigidbody.AddForce(_shootingPoint.transform.forward * _powerThrow * _rigidbody.mass, ForceMode.Impulse);
     }
-    
-    // public void EndAnimation()
-    // {
-    //     Debug.Log("EndAnimation");
-    //     CanUse = true;
-    // }
 
     IEnumerator Bang(Character character)
     {
-        Debug.Log("Start StartCoroutine");
+        //Debug.Log("Start StartCoroutine");
 
         TimerBang = true;
         yield return new WaitForSeconds(_timeSecondsBeforeBang);
         
-        Debug.Log("Process StartCoroutine");
+        //Debug.Log("Process StartCoroutine");
         if (TimerBang)
         {
             Debug.Log($"BANG! {this.gameObject.name}");
 
+            //TODO добавить ещё маску Obstacles что бы откидывать предметы, только с массой нужно что-то решить
             var colliders = Physics.OverlapSphere(_model.transform.position, _radiusKilling, LayerMask.GetMask( "Player", "Enemies"));
             foreach (var collider in colliders)
             {
@@ -77,7 +65,7 @@ public class Grenade : Weapon
 
                 var direction = collider.transform.position - _model.transform.position;
 
-                Debug.Log($"Collider:{collider.transform.position}  Grenade: {_model.transform.position}");
+                //Debug.Log($"Collider:{collider.transform.position}  Grenade: {_model.transform.position}");
                 Ray ray = new Ray(_model.transform.position, direction);
 
                 //Debug.DrawRay(ray.origin, ray.direction, Color.green, 10f);
@@ -88,8 +76,8 @@ public class Grenade : Weapon
                 {
                     proportion_damage = (_radiusKilling - hit.distance) / _radiusKilling;
 
-                    //Debug.DrawLine(_model.transform.position, collider.transform.position, Color.red, 10f);
-                    Debug.DrawLine(ray.origin, ray.GetPoint(hit.distance), Color.red, 10f);
+                    Debug.DrawLine(_model.transform.position, collider.transform.position, Color.red, 10f);
+                    //Debug.DrawLine(ray.origin, ray.GetPoint(hit.distance), Color.red, 10f);
 
                     Debug.Log($"Raycast {collider.gameObject.name} HitDistance:{hit.distance} PDamage: {proportion_damage}", collider);
                 }

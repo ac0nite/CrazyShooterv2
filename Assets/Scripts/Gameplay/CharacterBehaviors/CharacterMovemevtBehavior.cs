@@ -68,9 +68,10 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     {
         lookPoint.y = transform.position.y;
         _lookVector = (lookPoint - transform.position).normalized;
-        _currentRotation = Quaternion.LookRotation(_lookVector);
+        //_currentRotation = Quaternion.LookRotation(_lookVector);
+        var rotation = Quaternion.LookRotation(_lookVector);
+        _currentRotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 5f);
     }
-
     public void ChangePlayerSprintMode(bool sprint_mode)
     {
         _sprint = sprint_mode;
