@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using PolygonCrazyShooter;
 using UnityEditor;
 using UnityEngine;
@@ -36,6 +37,7 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     private Quaternion _currentRotation = Quaternion.identity;
 
     private Vector3 _targetMovementVelocity = Vector3.zero;
+    private Vector3 _targetMovementInputVector = Vector3.zero;
     private Vector3 _lookVector = Vector3.zero;
     private bool _sprint = false;
     public TypeStateLocomotion StateLocomotion = TypeStateLocomotion.idle;
@@ -61,7 +63,97 @@ public class CharacterMovemevtBehavior : MonoBehaviour
 
     public void ChangePlayerMovementDirectionChanged(Vector3 targetMovementVector)
     {
-        _targetMovementVelocity = targetMovementVector.normalized * _speed;
+        //_targetMovementVelocity = targetMovementVector.normalized * _speed;
+
+        //DEBUG
+        // Debug.Log($"targetMovementVector:{targetMovementVector}");
+        _targetMovementInputVector = targetMovementVector;
+//        _targetMovementVelocity = Vector3.zero;
+//
+//        if (targetMovementVector == Vector3.forward)
+//        {
+//            _targetMovementVelocity += _lookVector * _speed;
+//        }
+//        if(targetMovementVector == Vector3.back)
+//        {
+//            _targetMovementVelocity += -_lookVector * _speed;
+//        }
+//        if (targetMovementVector == Vector3.right)
+//        {
+//            var norm = Vector3.Cross(_lookVector, Vector3.up);
+//            _targetMovementVelocity += -norm * _speed;
+//
+//        }
+//        if (targetMovementVector == Vector3.left)
+//        {
+//            var norm = Vector3.Cross(_lookVector, Vector3.up);
+//            _targetMovementVelocity += norm * _speed;
+//        }
+//        if (targetMovementVector == (Vector3.forward + Vector3.right).normalized)
+//        {
+//            _targetMovementVelocity += _lookVector * _speed;
+//            var norm = Vector3.Cross(_lookVector, Vector3.up);
+//            _targetMovementVelocity += -norm * _speed;
+//        }
+//        if (targetMovementVector == (Vector3.forward + Vector3.left).normalized)
+//        {
+//            _targetMovementVelocity += _lookVector * _speed;
+//            var norm = Vector3.Cross(_lookVector, Vector3.up);
+//            _targetMovementVelocity += norm * _speed;
+//        }
+
+
+        //Debug.Log($"_lookVector: {_lookVector} - targetMovementVector:{targetMovementVector}");
+        //end DEBUG
+    }
+
+    private void NewTargetMovement()
+    {
+        _targetMovementVelocity = Vector3.zero;
+        float speed = _speed;
+
+        if (_targetMovementInputVector == Vector3.forward)
+        {
+            _targetMovementVelocity += _lookVector;
+        }
+        if (_targetMovementInputVector == Vector3.back)
+        {
+            _targetMovementVelocity += -_lookVector;
+            speed *= 0.8f;
+        }
+        if (_targetMovementInputVector == Vector3.right)
+        {
+            _targetMovementVelocity += -Vector3.Cross(_lookVector, Vector3.up);
+        }
+        if (_targetMovementInputVector == Vector3.left)
+        {
+            _targetMovementVelocity += Vector3.Cross(_lookVector, Vector3.up);
+        }
+        if (_targetMovementInputVector == (Vector3.forward + Vector3.right).normalized)
+        {
+            _targetMovementVelocity += _lookVector;
+            _targetMovementVelocity += -Vector3.Cross(_lookVector, Vector3.up);
+        }
+        if (_targetMovementInputVector == (Vector3.forward + Vector3.left).normalized)
+        {
+            _targetMovementVelocity += _lookVector;
+            _targetMovementVelocity += Vector3.Cross(_lookVector, Vector3.up);
+        }
+        if (_targetMovementInputVector == (Vector3.back + Vector3.right).normalized)
+        {
+            _targetMovementVelocity += -_lookVector;
+            _targetMovementVelocity += -Vector3.Cross(_lookVector, Vector3.up);
+            speed *= 0.8f;
+        }
+        if (_targetMovementInputVector == (Vector3.back + Vector3.left).normalized)
+        {
+            _targetMovementVelocity += -_lookVector;
+            _targetMovementVelocity += Vector3.Cross(_lookVector, Vector3.up);
+            speed *= 0.8f;
+        }
+
+        //Debug.DrawLine(transform.position, _targetMovementVelocity, Color.blue, 1f);
+        _targetMovementVelocity = _targetMovementVelocity.normalized * speed;
     }
 
     private void OnPlayerLookPointChanged(Vector3 lookPoint)
@@ -75,12 +167,15 @@ public class CharacterMovemevtBehavior : MonoBehaviour
     public void ChangePlayerSprintMode(bool sprint_mode)
     {
         _sprint = sprint_mode;
-        //Debug.Log($"SPRINT: {sprint_mode}");
     }
     // Update is called once per frame
     void Update()
     {
+        NewTargetMovement();
+
         _currentVelocity = Vector3.Lerp(_currentVelocity, _targetMovementVelocity, _VelocityLerpSpeed * Time.deltaTime);
+
+        //Debug.Log($"_currentVelocity:{_currentVelocity}");
 
         float moveSpeedX = Vector3.Dot(_currentVelocity / _speed, -Vector3.Cross(_lookVector, Vector3.up));
         float moveSpeedZ = Vector3.Dot(_currentVelocity / _speed, _lookVector);
@@ -92,6 +187,8 @@ public class CharacterMovemevtBehavior : MonoBehaviour
         _animator.SetFloat("MoveSpeedZ", moveSpeedZ);
 
         _lookVector = transform.forward;
+
+        //Debug.Log($"_currentRotation:{_currentRotation} - _currentVelocity:{_currentVelocity}");
     }
 
     private void FixedUpdate()
@@ -105,8 +202,6 @@ public class CharacterMovemevtBehavior : MonoBehaviour
         else
             StateLocomotion = TypeStateLocomotion.run;
 
-        //Debug.Log(StateLocomotion.ToString());
-        
         _rigidbody.velocity = new Vector3(_currentVelocity.x, _rigidbody.velocity.y, _currentVelocity.z);
         _rigidbody.rotation = _currentRotation;
     }

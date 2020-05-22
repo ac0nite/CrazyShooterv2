@@ -32,11 +32,11 @@ public class MoverCamera : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, _target.position + _offset, _LerpT * Time.deltaTime);
 
         
-        if (Quaternion.Angle(transform.rotation, _target.rotation) > 25f)
+        if (Quaternion.Angle(transform.rotation, _target.rotation) > 35f)
         {
             var rot  = Quaternion.LookRotation(_target.forward, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * 0.8f);
-            //_target.rotation = rot;
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * 0.5f);
+            //_target.rotation = transform.rotation;
         }
     }
 
