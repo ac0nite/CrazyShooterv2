@@ -111,7 +111,7 @@ public class InputManager : SingletoneGameObject<InputManager>
 
         ///
         /// look point
-        /// 
+        ///
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var plane = new Plane(Vector3.up, transform.position);
 
