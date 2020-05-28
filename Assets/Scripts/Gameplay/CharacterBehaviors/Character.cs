@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PolygonCrazyShooter;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterPickUpBehavior))]
 [RequireComponent(typeof(CharacterHealthComponent))]
@@ -26,7 +27,9 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform _leftHandBone = null;
     //[SerializeField] private List<WeaponType> _weaponTypes = null;
     [SerializeField] private Inventory _inventoryComponent = null;
-   
+
+    //[SerializeField] private Slider _playerHealthProgressBarSlider = null;
+
     public Weapon CurrentWeapon { get; set; }
 
     //private readonly List<Weapon> CurrentWeapons = new List<Weapon>(4);
@@ -68,7 +71,15 @@ public class Character : MonoBehaviour
             _inventoryComponent.PickUp(defaultWeapon);
             defaultWeapon.Apply(this);
             //  ApplyWeapon(defaultWeapon);
-        }     
+        }
+
+        //if (_playerHealthProgressBarSlider != null)
+        //{
+        //    _playerHealthProgressBarSlider.value = 1f;
+        //    var sliderCanvas = _playerHealthProgressBarSlider.gameObject.GetComponentInParent<Canvas>();
+        //    //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    sliderCanvas.worldCamera = Camera.main;
+        //}
     }
 
     public void ApplyWeapon(Weapon weapon)
@@ -145,6 +156,13 @@ public class Character : MonoBehaviour
         {
             _characterAnimator.SetAnimation("DamageTrigger");
         }
+
+        //if (_playerHealthProgressBarSlider != null)
+        //{
+        //    _playerHealthProgressBarSlider.value = _health / _characterHealth.MaxHealth;
+        //    if(_health == 0f)
+        //        _playerHealthProgressBarSlider.gameObject.SetActive(false);
+        //}
     }
 
     public void ChangeWeapon(WeaponType weponType)
