@@ -107,6 +107,7 @@ public class Weapon : InventoryItem
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = hitList[i].point;
             sphere.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            StartCoroutine(RemoveSphere(sphere));
 
             //GamePlay code
             if (hitList[i].collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
@@ -161,4 +162,11 @@ public class Weapon : InventoryItem
     {
 //        Debug.Log("ThrowGrenade");
     }
+
+    IEnumerator RemoveSphere(GameObject sphere)
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(sphere.gameObject);
+    }
+    
 }

@@ -135,6 +135,8 @@ public class Character : MonoBehaviour
         {
             collider.enabled = false;
         }
+
+        StartCoroutine(DestroyCharacter());
     }
 
     private void OnHealthChange(CharacterHealthComponent _characterHealth, float _health)
@@ -224,5 +226,11 @@ public class Character : MonoBehaviour
     private void OnOneShoot()
     {
         CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion);
+    }
+
+    IEnumerator DestroyCharacter()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
     }
 }

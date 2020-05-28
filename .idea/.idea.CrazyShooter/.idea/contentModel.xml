@@ -67,6 +67,13 @@
             </e>
           </e>
         </e>
+        <e p="PolygonWar" t="Include">
+          <e p="Materials" t="Include">
+            <e p="Shader" t="Include">
+              <e p="Particle VertexLit Blended_Backface.shader" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Camera" t="Include">
             <e p="MoverCamera.cs" t="Include" />
