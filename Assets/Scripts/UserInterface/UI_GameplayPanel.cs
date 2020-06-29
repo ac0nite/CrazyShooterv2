@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UI_GameplayPanel : UI_Panel
 {
+    [SerializeField] private Text _deadlabelText = null;
     [SerializeField] private Text _scorelabelText = null;
     [SerializeField] private Slider _playerHealthProgressBaSlider = null;
     //[SerializeField] private GameObject _pauseDummy = null;
@@ -22,6 +23,7 @@ public class UI_GameplayPanel : UI_Panel
 
     private void Start()
     {
+        _deadlabelText.text = "0";
         _scorelabelText.text = "0";
         _playerHealthProgressBaSlider.value = 1;
     }
@@ -60,8 +62,9 @@ public class UI_GameplayPanel : UI_Panel
         UIManager.Instance.ShowPanel(UI_PanelType.Inventory);
     }
 
-    private void OnCurrentScoreChanged(int score)
+    private void OnCurrentScoreChanged(int dead, int score)
     {
         _scorelabelText.text = score.ToString();
+        _deadlabelText.text = dead.ToString();
     }
 }

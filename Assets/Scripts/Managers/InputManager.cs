@@ -14,6 +14,7 @@ public class InputManager : SingletoneGameObject<InputManager>
     public Action<KeyCode> EventPlayerChangeWeapon;
     public Action EventPickUpItemButtonPressed;
     public Action EventThrowningGrenade;
+    
     public Action<bool> EventOpenInventoryItem;
     public Action<bool> EventPause;
 
@@ -96,6 +97,12 @@ public class InputManager : SingletoneGameObject<InputManager>
         /// grenade
         ///
         if(Input.GetKeyDown(KeyCode.G))
+            EventThrowningGrenade?.Invoke();
+        
+        ///
+        /// next weapon
+        ///
+        if(Input.GetKeyDown(KeyCode.Q))
             EventThrowningGrenade?.Invoke();
 
         ///

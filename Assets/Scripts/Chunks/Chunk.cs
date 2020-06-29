@@ -10,11 +10,14 @@ public class Chunk : MonoBehaviour
 
     public List<ChunkDockPoint> DockPoints { get { return _dockPointSettings; } }
     public List<EnemySpawnPoint> EnemiesSpawnPoint { get { return _enemiesSpawnPoint; } }
+    
+    public List<InventorySpawnPoint> InventorySpawnPoints { get { return _inventorySpawnPoint; } }
     public List<BoxCollider> BoundingColliders { get { return _boundingColliders; }  }
 
     [SerializeField] private List<ChunkDockPoint> _dockPointSettings = null;
     [SerializeField] private List<EnemySpawnPoint> _enemiesSpawnPoint = null;
     [SerializeField] private List<BoxCollider> _boundingColliders = null;
+    [SerializeField] private List<InventorySpawnPoint> _inventorySpawnPoint = null;
 
     public readonly Dictionary<ChunkDockPoint, Chunk> NeighbourChunks = new Dictionary<ChunkDockPoint, Chunk>();
     private void Update()

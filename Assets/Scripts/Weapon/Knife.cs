@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
+using PolygonCrazyShooter;
 using UnityEngine;
 
 public class Knife : Weapon
 {
-    public override void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle)
+    public override void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle, bool IsCameraScreenPoint = true)
     {
         //base.Shoot(stateLocomotion);
     }
@@ -21,7 +21,13 @@ public class Knife : Weapon
         var enemy = other.GetComponentInParent<CharacterHealthComponent>();
         if (enemy != null)
         {
-            enemy.ModifyHealth(-Damage);
+            enemy.ModifyHealth(-Damage, WeaponType.Knife);
         }
+    }
+
+    public override float GetScatter()
+    {
+        //return base.GetScatter();
+        return 0f;
     }
 }

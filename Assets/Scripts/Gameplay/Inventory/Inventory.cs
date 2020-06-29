@@ -6,14 +6,15 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public readonly List<InventoryItem> Items = new List<InventoryItem>();
+    public List<InventoryItem> Items = new List<InventoryItem>();
+    public List<InventoryItem> BusyItems = new List<InventoryItem>();
 
     public event Action<InventoryItem> EventItemPickedUp;
     public event Action<InventoryItem> EventItemDropedDown;
     
     public void PickUp(InventoryItem item)
     { 
-        Debug.Log("PickUp");
+//        Debug.Log("PickUp");
         Items.Add(item);
 
         item.transform.SetParent(transform); //имеем ввиду что находимся под персонажем
@@ -33,10 +34,12 @@ public class Inventory : MonoBehaviour
     public void Drop(InventoryItem item)
     {
         Items.Remove(item);
+        BusyItems.Remove(item);
+        
         item.transform.SetParent(null);
 
         item.Drop();
-        
+
         EventItemDropedDown?.Invoke(item);
     }
 }

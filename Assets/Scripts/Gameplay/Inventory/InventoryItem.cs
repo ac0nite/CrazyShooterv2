@@ -27,6 +27,14 @@ namespace PolygonCrazyShooter
         }
         public abstract void Apply(Character character);
 
+        public abstract WeaponType GetWeaponType();
+        public abstract float GetDamage();
+
+        public virtual float GetScatter()
+        {
+            return 0f;
+        }
+
         public virtual void UnApply() { }
     }
 }

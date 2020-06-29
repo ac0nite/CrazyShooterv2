@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PolygonCrazyShooter;
 using UnityEngine;
 
 public class CharacterHealthComponent : MonoBehaviour
 {
-    public event Action<CharacterHealthComponent> EventCharacterDead;
+    public event Action<CharacterHealthComponent, float> EventCharacterDead;
     public event Action<CharacterHealthComponent, float> EventHealthChange;
     [SerializeField] public float MaxHealth = 100f;
     public float Health { get; private set; }
@@ -14,10 +15,10 @@ public class CharacterHealthComponent : MonoBehaviour
         Health = MaxHealth;
     }
 
-    public void ModifyHealth(float HealthPoints)
+    public void ModifyHealth(float HealthPoints, WeaponType _type = WeaponType.undefined, float _distance = 0f)
     {
         var newHalth = Mathf.Clamp(HealthPoints + Health, 0f, MaxHealth);
-        Debug.Log($"Obj: {this.gameObject.name}  Health: {newHalth}", this);
+//        Debug.Log($"Obj: {this.gameObject.name}  Health: {newHalth}", this);
         
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (Health == newHalth) 
@@ -28,7 +29,7 @@ public class CharacterHealthComponent : MonoBehaviour
 
         if (Health <= 0f)
         {
-            EventCharacterDead?.Invoke(this);
+            EventCharacterDead?.Invoke(this,_type.GetScore(_distance));
         }
     }
 }

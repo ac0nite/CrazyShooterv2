@@ -8,13 +8,8 @@ namespace PolygonCrazyShooter
     {
         Undefined = 0,
 
-        TypeAWide = 1,
-        TypeANarrow = 2,
-
-        TypeBSlopeUpWide = 3,
-        TypeBSlopeUpNarrow = 4,
-
-        TypeASlopeDownWide = 5,
-        TypeASlopeDownNarrow = 6
+        TypeAsphalt = 1,
+        TypeGravel = 2,
+        TypeGrass = 3
     }
 }

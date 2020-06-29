@@ -17,7 +17,8 @@ public class Weapon : InventoryItem
 
     [SerializeField] protected float Damage = 50f;
     [SerializeField] private bool _scatterForWeapon = true;
-    [Range(0f, 10f)] [SerializeField] private float _scatterWeapon = 0f;
+    [Range(0f, 10f)] [SerializeField] public float ScatterWeapon = 0f;
+    [SerializeField] protected ParticleSystem _muzzleFlashPS = null;
 
     public bool CanUse = true;
 
@@ -42,8 +43,8 @@ public class Weapon : InventoryItem
         {
             if (gameObject.GetInstanceID() == character.CurrentWeapon.gameObject.GetInstanceID())
                 return;
-        }
-
+        } 
+        
         _model.gameObject.SetActive(true);
 
        _model.SetParent(character.RightHandBone);
@@ -54,6 +55,12 @@ public class Weapon : InventoryItem
        
        character.GetComponent<CharacterMovemevtBehavior>()?.SetSpeed(character.CurrentWeapon.Type.GetSpeed());
     }
+
+    public override WeaponType GetWeaponType()
+    {
+        return _currentWeaponType;
+    }
+
     public override void UnApply()
     {
         _model.gameObject.SetActive(false);
@@ -69,45 +76,44 @@ public class Weapon : InventoryItem
         }
         base.Drop();
     }
-    public virtual void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle)
+    public virtual void Shoot(TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle, bool IsCameraScreenPoint = true)
     {
-        //var type_locomotion = GetComponentInParent<CharacterMovemevtBehavior>()?.StateLocomotion;
-        //Debug.Log($"StateLocomotion: {type_locomotion.ToString()}");
-        
         CanUse = false;
-        var ray_tmp = Camera.main.ScreenPointToRay(Input.mousePosition);
-            var direction_tmp = ray_tmp.origin - _shootingPoint.position;
-        var hit_tmp = Physics.RaycastAll(ray_tmp.origin, ray_tmp.direction, float.MaxValue, LayerMask.GetMask("Default", "Enemies", "Obstacles"));
-        //Debug.DrawRay(ray_tmp.origin, ray_tmp.GetPoint(100f), Color.black, 10f);
+
+        _muzzleFlashPS.Play();
+        
+        Ray ray_tmp;
+        if (IsCameraScreenPoint)
+        { 
+            ray_tmp = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //var direction_tmp = ray_tmp.origin - _shootingPoint.position;
+        }
+        else
+        {
+            ray_tmp = new Ray(_shootingPoint.position, transform.forward);
+        }
+        
+        var hit_tmp = Physics.RaycastAll(ray_tmp.origin, ray_tmp.direction, float.MaxValue, LayerMask.GetMask("Default", "Player", "Enemies", "Obstacles"));
         var hit_list_tmp = hit_tmp.ToList();
         hit_list_tmp.Sort((x,y)=>x.distance.CompareTo(y.distance));
-        //Debug.DrawLine(_shootingPoint.position, hit_list_tmp[hit_list_tmp.Count-1].point, Color.black, 10f);
 
         var direct_ray = hit_list_tmp[0].point - _shootingPoint.position;
-        
-        //var ray = new Ray(_shootingPoint.position, direct_ray); //DEBUG
 
         var ray = Scatter(new Ray(_shootingPoint.position, direct_ray), stateLocomotion);
         
-        //var ray = new Ray(_shootingPoint.position, transform.forward); //_shootingPoint.forward
         Debug.DrawLine(ray.origin, ray.GetPoint(50f), Color.red, 3f);
             
-        var rayCastHit = Physics.RaycastAll(ray, float.MaxValue, LayerMask.GetMask("Enemies", "Obstacles"));
-
-
+        var rayCastHit = Physics.RaycastAll(ray, float.MaxValue, LayerMask.GetMask("Player", "Enemies", "Obstacles"));
+        
         var hitList = rayCastHit.ToList();
         hitList.Sort((x, y) => x.distance.CompareTo(y.distance));
 
         for (int i = 0; i < hitList.Count; i++)
         {
-            // //DEBUG
-            // var rayOffset = Vector3.up * 0.1f * i;
-            // Debug.DrawLine(ray.origin + rayOffset, hitList[i].point + rayOffset, Color.red, 3f);
-
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.position = hitList[i].point;
-            sphere.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-            StartCoroutine(RemoveSphere(sphere));
+            // GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            // sphere.transform.position = hitList[i].point;
+            // sphere.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            // StartCoroutine(RemoveSphere(sphere));
 
             //GamePlay code
             if (hitList[i].collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
@@ -116,16 +122,17 @@ public class Weapon : InventoryItem
             }
 
             // if (hitList[i].collider.gameObject.layer == LayerMask.NameToLayer("Enemies"))
-              
-            Debug.Log($"Distance = {hitList[i].distance}");
+
             var healthComponent = hitList[i].collider.GetComponentInParent<CharacterHealthComponent>();
             if(healthComponent != null)
             {
                 //Debug.Log("Character was hit!");
-                healthComponent.ModifyHealth(-Damage);
+                healthComponent.ModifyHealth(- GetDamageBody(hitList[i]), _currentWeaponType, hitList[i].distance);
             }
         }
     }
+    
+    
 
     private Ray Scatter(Ray ray, TypeStateLocomotion stateLocomotion = TypeStateLocomotion.idle)
     {
@@ -142,9 +149,9 @@ public class Weapon : InventoryItem
 
                 //Debug.Log($"{stateLocomotion.DeltaStreapLocomotion()}");
 
-                var deltax = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + _scatterWeapon/1000f);
-                var deltay = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + _scatterWeapon/1000f);
-                var deltaz = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + _scatterWeapon/1000f);
+                var deltax = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + ScatterWeapon/1000f);
+                var deltay = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + ScatterWeapon/1000f);
+                var deltaz = UnityEngine.Random.Range(stateLocomotion.DeltaScatterLocomotion(), max_delta + ScatterWeapon/1000f);
             
                 //Debug.Log($"Distance: {hitList[i].distance}  MaxDelta: {max_delta} {deltax} {deltay} {deltaz}");
             
@@ -158,6 +165,19 @@ public class Weapon : InventoryItem
 
         return ray;
     }
+
+    private float GetDamageBody(RaycastHit hit)
+    {
+        var caps_collider = (CapsuleCollider)hit.collider;
+        var body_part = hit.point.y / caps_collider.height;
+        
+        if (body_part < (3f / 8f)) //ноги
+            return Damage * (1f / 3f);
+        else if (body_part < (6f / 8f) && body_part > (3f / 8f)) // туловище
+            return Damage * (2f / 3f);
+        
+        return Damage; //голова
+    }
     public virtual void ThrowGrenade(Character character)
     {
 //        Debug.Log("ThrowGrenade");
@@ -168,5 +188,15 @@ public class Weapon : InventoryItem
         yield return new WaitForSeconds(3f);
         Destroy(sphere.gameObject);
     }
-    
+
+
+    public override float GetDamage()
+    {
+        return Damage;
+    }
+
+    public override float GetScatter()
+    {
+        return ScatterWeapon;
+    }
 }

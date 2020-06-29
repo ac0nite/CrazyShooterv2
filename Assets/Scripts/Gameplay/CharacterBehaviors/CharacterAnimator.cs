@@ -15,7 +15,7 @@ public class CharacterAnimator : MonoBehaviour
 
     public void Die()
     {
-        _animator.SetLayerWeight(1,0f);
+        //_animator.SetLayerWeight(1,0f);
         _animator.SetTrigger("DeathTrigger");
     }
     
@@ -48,7 +48,7 @@ public class CharacterAnimator : MonoBehaviour
 
     private void EndAnimation()
     {
-        Debug.Log("EndAnimation");
+//        Debug.Log("EndAnimation");
         EventEndAnimation?.Invoke();
         // var character = gameObject.GetComponent<Character>();
         // if (character != null)
@@ -60,7 +60,7 @@ public class CharacterAnimator : MonoBehaviour
 
     private void OneShot()
     {
-        Debug.Log("OneShot");
+//        Debug.Log("OneShot");
         EventOneShot?.Invoke();
 
         // var character = gameObject.GetComponent<Character>();

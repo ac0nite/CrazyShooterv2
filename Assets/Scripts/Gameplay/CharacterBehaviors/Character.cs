@@ -12,8 +12,9 @@ using UnityEngine.UI;
 //[RequireComponent(typeof(Medicine))]
 public class Character : MonoBehaviour
 {
+    public event Action EventThrowGrenade;
     private CharacterHealthComponent _characterHealthComponent = null;
-    private CharacterAnimator _characterAnimator = null;
+    public CharacterAnimator CharacterAnimator = null;
     private CharacterPickUpBehavior _characterPickUpBehavior = null;
     private CharacterMovemevtBehavior _characterMovemevtBehavior = null;
 
@@ -48,15 +49,15 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         _characterHealthComponent = GetComponent<CharacterHealthComponent>();
-        _characterAnimator = GetComponent<CharacterAnimator>();
+        CharacterAnimator = GetComponent<CharacterAnimator>();
         _characterPickUpBehavior = GetComponent<CharacterPickUpBehavior>();
         _characterMovemevtBehavior = GetComponent<CharacterMovemevtBehavior>();
 
         _characterHealthComponent.EventHealthChange += OnHealthChange;
         _characterHealthComponent.EventCharacterDead += OnCharacterDead;
-        _characterAnimator.EventStartFlyingGrenade += OnStartFlyingGrenade;
-        _characterAnimator.EventEndAnimation += OnEventEndAnimation;
-        _characterAnimator.EventOneShot += OnOneShoot;
+        CharacterAnimator.EventStartFlyingGrenade += OnStartFlyingGrenade;
+        CharacterAnimator.EventEndAnimation += OnEventEndAnimation;
+        CharacterAnimator.EventOneShot += OnOneShoot;
     }
 
     private void Start()
@@ -81,7 +82,6 @@ public class Character : MonoBehaviour
         //    sliderCanvas.worldCamera = Camera.main;
         //}
     }
-
     public void ApplyWeapon(Weapon weapon)
     {
         if (CurrentWeapon != null)
@@ -94,10 +94,10 @@ public class Character : MonoBehaviour
         CurrentWeapon = weapon;
         //CurrentWeapon.Apply(this);
         
-        _characterAnimator.SetAnimation(CurrentWeapon.Type.GetIdAnimationTriggerName());
+        CharacterAnimator.SetAnimation(CurrentWeapon.Type.GetIdAnimationTriggerName());
         
-        _characterAnimator.LeftHandIKTarget = CurrentWeapon.LeftHadIKTargetPoint;
-        _characterAnimator.RightHandIKTarget = CurrentWeapon.RightHadIKTargetPoint;    
+        CharacterAnimator.LeftHandIKTarget = CurrentWeapon.LeftHadIKTargetPoint;
+        CharacterAnimator.RightHandIKTarget = CurrentWeapon.RightHadIKTargetPoint;    
     }
 
     public void DestroyMedicineItem(Medicine medicineItem)
@@ -112,33 +112,29 @@ public class Character : MonoBehaviour
     {
         _characterHealthComponent.EventCharacterDead -= OnCharacterDead;
         _characterHealthComponent.EventHealthChange -= OnHealthChange;
-        _characterAnimator.EventStartFlyingGrenade -= OnStartFlyingGrenade;
-        _characterAnimator.EventEndAnimation -= OnEventEndAnimation;
-        _characterAnimator.EventOneShot += OnOneShoot;
+        CharacterAnimator.EventStartFlyingGrenade -= OnStartFlyingGrenade;
+        CharacterAnimator.EventEndAnimation -= OnEventEndAnimation;
+        CharacterAnimator.EventOneShot += OnOneShoot;
+//        Debug.Log($"OnDestroy", this);
     }
 
     protected virtual void Update()
     {
-//        if (Input.GetKey(KeyCode.F) && CurrentWeapon != null)
-//        {
-//            CurrentWeapon.DetachModel();
-//        }
     }
 
-    public void Shoot()
+    public void Shoot(bool IsCameraScreenPoint = true)
     {
         if (CurrentWeapon.CanUse)
         {
-            _characterAnimator.SetAnimation("AttackTriggerA");
+            CharacterAnimator.SetAnimation("AttackTriggerA");
             if(CurrentWeapon.Type != WeaponType.Heavy) //Heavy стреляет тройным вестрелом, поэтому обрабатывается по событию анимации 
-                CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion);
-            
+                CurrentWeapon.Shoot(_characterMovemevtBehavior.StateLocomotion, IsCameraScreenPoint);
         }
     }
 
-    private void OnCharacterDead(CharacterHealthComponent healthComponent)
+    private void OnCharacterDead(CharacterHealthComponent healthComponent, float _score)
     {
-        _characterAnimator.Die();
+        CharacterAnimator.Die();
         
         GetComponent<Rigidbody>().isKinematic = true;
         var colliders = GetComponentsInChildren<Collider>();
@@ -147,14 +143,16 @@ public class Character : MonoBehaviour
             collider.enabled = false;
         }
 
-        StartCoroutine(DestroyCharacter());
+        //var us = GetComponent<PlayerCharacterController>();
+        if(GetComponent<PlayerCharacterController>() == null)
+            StartCoroutine(DestroyCharacter());
     }
 
     private void OnHealthChange(CharacterHealthComponent _characterHealth, float _health)
     {
         if (_health != 0f)
         {
-            _characterAnimator.SetAnimation("DamageTrigger");
+            CharacterAnimator.SetAnimation("DamageTrigger");
         }
 
         //if (_playerHealthProgressBarSlider != null)
@@ -167,19 +165,14 @@ public class Character : MonoBehaviour
 
     public void ChangeWeapon(WeaponType weponType)
     {
-        var weapons = CharacterInventory.Items
+        // var weapons = CharacterInventory.Items
+        //     .FindAll(i => (typeof(Weapon) == i.GetType() || typeof(Weapon) == i.GetType().BaseType)) //выделяем только тип Weapon и производные от Weapon
+        //     .FindAll(i => ((Weapon) i).Type == weponType);
+
+        var weapons = CharacterInventory.BusyItems
             .FindAll(i => (typeof(Weapon) == i.GetType() || typeof(Weapon) == i.GetType().BaseType)) //выделяем только тип Weapon и производные от Weapon
             .FindAll(i => ((Weapon) i).Type == weponType);
-
-        //var weapons2 = CharacterInventory.Items.FindAll(i =>
-        //{
-        //    if (typeof(Weapon) == i.GetType() || typeof(Weapon) == i.GetType().BaseType)
-        //    {
-        //        return ((Weapon) i).Type == weponType;
-        //    }
-        //    return false;
-        //});
-
+        
         if (weapons.Count == 1)
         {
             weapons[0].Apply(this);
@@ -201,10 +194,11 @@ public class Character : MonoBehaviour
         {
             _inventoryComponent.PickUp(pickedUpItem);
 
-            if (pickedUpItem.GetType() != typeof(Grenade))
-            {
-                pickedUpItem.Apply(this);
-            }
+            // if (pickedUpItem.GetType() != typeof(Grenade))
+            // {
+            //     pickedUpItem.Apply(this);
+            // }
+            _characterPickUpBehavior.ShowMessage.Remove(pickedUpItem.GetInstanceID());
 
             if (pickedUpItem.GetType() == typeof(Grenade))
             {
@@ -215,15 +209,19 @@ public class Character : MonoBehaviour
 
     public void ThrowGrenade()
     {
-        var grenades = gameObject.GetComponentsInChildren<Grenade>();
-        if (grenades.Length > 0)
+         var grenades = CharacterInventory.Items.FindAll(i => (i.GetType() == typeof(Grenade)));
+         
+         //var grenades = CharacterInventory.BusyItems.FindAll(i => (i.GetType() == typeof(Grenade) && ((Grenade)i) != null));
+         if (grenades.Count > 0)
         {
-            if (grenades[0].CanUse)
+            var greande = (Grenade) grenades[0];
+            if (greande.CanUse)
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                grenades[0].ThrowGrenade(this);
-                _characterAnimator.SetAnimation("AttackGrenadeTrigger");
+                greande.ThrowGrenade(this);
+                CharacterAnimator.SetAnimation("AttackGrenadeTrigger");
                 CurrentWeapon.CanUse = false;
+                EventThrowGrenade?.Invoke();
             }
         }
     }

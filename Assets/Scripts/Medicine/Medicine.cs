@@ -6,7 +6,14 @@ using UnityEngine;
 
 public class Medicine : InventoryItem
 {
-    [SerializeField] private float _health = 50f;
+    public float Healthing
+    {
+        get => _health;
+        set => _health = value;
+    }
+
+    [SerializeField]
+    private float _health = 50f;
 
     public override void PickUp()
     {
@@ -33,5 +40,20 @@ public class Medicine : InventoryItem
         }
 
         //Debug.Log($"Health {character.HealthComponent.Health}");
+    }
+
+    public override WeaponType GetWeaponType()
+    {
+        return WeaponType.Medicine;
+    }
+
+    public override float GetDamage()
+    {
+        return 0f;
+    }
+
+    public float GetHealthMedicine()
+    {
+        return _health;
     }
 }

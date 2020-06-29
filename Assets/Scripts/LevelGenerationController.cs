@@ -32,6 +32,8 @@ public class LevelGenerationController : MonoBehaviour
 
         if (generateAdditionalElements)
             EnemiesSpawn(spawnChunk);
+        
+        InventorySpawn(spawnChunk);
 
         spawnChunk.EventPlayerEntered += OnPlayerEnteredChunk;
 
@@ -72,6 +74,7 @@ public class LevelGenerationController : MonoBehaviour
                 if(IsEnoughSpaceForChunk(neighbour))
                 {
                     EnemiesSpawn(neighbour);
+                    InventorySpawn(neighbour);
                     neighbour.EventPlayerEntered += OnPlayerEnteredChunk;
                     center.NeighbourChunks[centerDockPoint] = neighbour;
                     neighbour.NeighbourChunks[neighbourDockPoint] = center;
@@ -124,7 +127,11 @@ public class LevelGenerationController : MonoBehaviour
                 QueryTriggerInteraction.Collide);
 
             if (selColliders.Length != 0)
+            {
+//                Debug.Log($"1. chunk", chunk);
+//                Debug.Log($"2. boundingCollider",boundingCollider);
                 return false;
+            }
         }
 
         return true;
@@ -156,90 +163,20 @@ public class LevelGenerationController : MonoBehaviour
         }
     }
 
-    //private void BindNeighbourDockPointChanks(Chunk center)
-    //{
-    //    Chunk local_center = null;
-
-    //    foreach (Direction direction in Enum.GetValues(typeof(Direction)))
-    //    {
-    //        if (!center._neighbourChunks.ContainsKey(direction))
-    //            continue;
-
-    //        local_center = center._neighbourChunks[direction];
-
-    //        Vector3 c = local_center.transform.position;
-    //        Vector3 d = new Vector3(c.x, c.y, c.z + 20);
-
-    //        int layerMask = 1 << 9;
-    //        Collider[] collider = Physics.OverlapBox(d, local_center.transform.localScale / 2, Quaternion.identity, layerMask);
-    //        //Chunk ch = collider[0].GetComponents<Chunk>;w
-
-    //        if (direction == Direction.Up)
-    //        {
-    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.UpRight];
-    //            local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Right];
-    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.LeftUp];
-    //            local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Left];
-    //        }
-    //        else if (direction == Direction.UpRight)
-    //        {
-    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Up];
-    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Right];
-    //        }
-    //        else if (direction == Direction.LeftUp)
-    //        {
-    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Up];
-    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.Left];
-    //        }
-    //        else if (direction == Direction.RightDown)
-    //        {
-    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Right];
-    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.Down];
-    //        }
-    //        else if (direction == Direction.DownLeft)
-    //        {
-    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.Left];
-    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Down];
-    //        }
-    //        else if (direction == Direction.Right)
-    //        {
-    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.UpRight];
-    //            local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Up];
-    //            local_center._neighbourChunks[Direction.DownLeft] = center._neighbourChunks[Direction.Down];
-    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.RightDown];
-    //        }
-    //        else if (direction == Direction.Left)
-    //        {
-    //            local_center._neighbourChunks[Direction.Up] = center._neighbourChunks[Direction.LeftUp];
-    //            local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Up];
-    //            local_center._neighbourChunks[Direction.RightDown] = center._neighbourChunks[Direction.Down];
-    //            local_center._neighbourChunks[Direction.Down] = center._neighbourChunks[Direction.DownLeft];
-    //        }
-    //        else if (direction == Direction.Down)
-    //        {
-    //            local_center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.RightDown];
-    //            local_center._neighbourChunks[Direction.UpRight] = center._neighbourChunks[Direction.Right];
-    //            local_center._neighbourChunks[Direction.Left] = center._neighbourChunks[Direction.DownLeft];
-    //            local_center._neighbourChunks[Direction.LeftUp] = center._neighbourChunks[Direction.Left];
-    //        }
-
-    //    }
-
-    //    //foreach(Direction direction in Enum.GetValues(typeof(Direction)))
-    //    //{
-    //    //    if (center._neighbourChunks.ContainsKey(direction))
-    //    //        continue;
-
-    //    //    switch(direction)
-    //    //    {
-    //    //        case Direction.Up:
-    //    //            center._neighbourChunks[Direction.Right] = center._neighbourChunks[Direction.Right.GetOpposite()];
-    //    //            center._neighbourChunks[Direction.Right.GetOpposite()] = center._neighbourChunks[Direction.Right];
-    //    //            break;
-    //    //    }
-    //    //}
-    //}
-
+    private void InventorySpawn(Chunk chunk)
+    {
+        if (UnityEngine.Random.Range(0, 2) == 1)
+        {
+            foreach (var spawnPosition in chunk.InventorySpawnPoints)
+            {
+                var settingsManager = SettingsManager.Instance;
+                var suitableInventory = settingsManager.Inventories.FindAll(i => i.GetWeaponType() == spawnPosition.Type);
+                var inventoryPrefab = suitableInventory[UnityEngine.Random.Range(0, suitableInventory.Count)];
+                var inventoryObject = Instantiate(inventoryPrefab, spawnPosition.transform.position, spawnPosition.transform.rotation);
+            }
+        }
+    }
+    
     private void OnPlayerEnteredChunk(Chunk chunk)
     {
         GenerationNeighbourChunks(chunk);

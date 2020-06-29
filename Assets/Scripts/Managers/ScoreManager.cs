@@ -8,7 +8,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private LevelGenerationController _levelGeneration = null;
     [SerializeField] private Character _player = null;
     private int _currentScore = 0;
-    public Action<int> EventCurrentScoreChanged;
+    private int _currentDead = 0;
+    public Action<int, int> EventCurrentScoreChanged;
 
     private void Start()
     {
@@ -29,12 +30,13 @@ public class ScoreManager : MonoBehaviour
         //как отписаться!!!
     }
 
-    private void OnCharacterDead(CharacterHealthComponent characterHealthComponent)
+    private void OnCharacterDead(CharacterHealthComponent characterHealthComponent, float _score)
     {
         if (_player.GetComponent<CharacterHealthComponent>() != characterHealthComponent)
         {
-            _currentScore++;
-            EventCurrentScoreChanged?.Invoke(_currentScore);   
+            _currentDead++;
+            _currentScore += (int)_score;
+            EventCurrentScoreChanged?.Invoke(_currentDead, _currentScore);   
         }
     }
 }

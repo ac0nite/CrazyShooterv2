@@ -11,7 +11,9 @@ public class SettingsManager : SingletoneGameObject<SettingsManager>
 
     [SerializeField] public List<Chunk> Chunks = null;
     [SerializeField] public List<Enemy> Enemies = null;
-    [SerializeField] public List<Weapon> Weapons = null;
+    [SerializeField] public List<InventoryItem> Inventories = null;
+    [SerializeField] public ShowMessage Message = null;
+    [SerializeField] public PlayerCharacterController Player = null;
 
   protected override void Awake()
     {

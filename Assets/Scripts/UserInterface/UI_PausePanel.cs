@@ -18,4 +18,10 @@ public class UI_PausePanel : UI_Panel
     {
         UIManager.Instance.ShowPanel(UI_PanelType.GamePlay);
     }
+    
+    public void OnQuitTheGameButtonClick()
+    {
+        Debug.Log("OnQuitTheGameButtonClick");
+        Application.Quit();
+    }
 }
